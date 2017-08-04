@@ -9,6 +9,13 @@ export default class Form extends React.Component {
     this.validate = this.validate.bind(this);
   }
 
+  componentWillReceiveProps({ errors, initialValues }) {
+    if (initialValues !== this.props.initialValues)
+      this.setState({ initialValues });
+
+    if (errors !== this.props.errors) this.setState({ errors });
+  }
+
   validate(onClick) {
     let { values } = this.state;
 

@@ -13,8 +13,7 @@ class App extends Component {
 
           <div
             submit
-            onClick={values =>
-              console.log('this will be called if validation passes', values)}
+            onClick={values => console.log('if validation passes, this logs')}
           >
             Submit!
           </div>
