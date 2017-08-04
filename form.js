@@ -18,9 +18,11 @@ export default class Form extends React.Component {
   }
 
   validate(onClick) {
+    let { rules } = this.props;
     let { values } = this.state;
+    if (!rules) return onClick(values);
 
-    const runner = new Validator(values, this.props.rules);
+    const runner = new Validator(values, rules);
 
     if (runner.fails()) {
       return this.setState({ errors: runner.errors.errors });
@@ -32,6 +34,7 @@ export default class Form extends React.Component {
   onBlur(name) {
     let { rules } = this.props;
     let { errors, values } = this.state;
+    if (!rules || !rules[name]) return;
 
     const runner = new Validator(
       { [name]: values[name] },
