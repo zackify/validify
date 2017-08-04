@@ -8,7 +8,7 @@
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-validify": "0.0.1",
+    "react-validify": "0.0.5",
     "validatorjs": "^3.13.3"
   },
   "scripts": {
