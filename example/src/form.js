@@ -30,14 +30,17 @@ export default class Form extends React.Component {
   }
 
   onBlur(name) {
-    console.log('here', name);
+    let { rules } = this.props;
     let { errors, values } = this.state;
 
-    const runner = new Validator({ [name]: values[name] }, this.props.rules);
-    if (runner.fails()) {
+    const runner = new Validator(
+      { [name]: values[name] },
+      { [name]: rules[name] }
+    );
+
+    if (runner.fails() && values[name]) {
       return this.setState({ errors: { ...errors, ...runner.errors.errors } });
     }
-
     if (errors[name])
       return this.setState({ errors: { ...errors, [name]: null } });
   }

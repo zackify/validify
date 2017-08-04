@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Input from './input';
-import Form from 'react-validify';
+import Form from './form';
 
 class App extends Component {
   render() {
