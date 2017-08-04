@@ -51,9 +51,11 @@ export default class Form extends React.Component {
     this.setState({ values });
   }
 
-  renderChildren() {
-    return React.Children.map(this.props.children, child => {
+  renderChildren(children) {
+    return React.Children.map(children, child => {
       if (!child || !child.props) return child;
+      if (child.children) return this.renderChildren(children);
+
       let { values, errors } = this.state;
 
       if (child.props.name)
@@ -75,11 +77,12 @@ export default class Form extends React.Component {
           onClick: () => this.validate(child.props.onClick),
         });
       }
+      return child;
     });
   }
 
   render() {
     let { children, rules, ...props } = this.props;
-    return <div {...props}>{this.renderChildren()}</div>;
+    return <div {...props}>{this.renderChildren(children)}</div>;
   }
 }
