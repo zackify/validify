@@ -2,9 +2,9 @@ import React from 'react';
 import Validator from 'validatorjs';
 
 export default class Form extends React.Component {
-  constructor() {
+  constructor({ initialValues }) {
     super();
-    this.state = { values: { email: 'terere' }, errors: {} };
+    this.state = { values: initialValues || {}, errors: {} };
     this.onChange = this.onChange.bind(this);
     this.validate = this.validate.bind(this);
   }

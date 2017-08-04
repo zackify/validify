@@ -5,7 +5,10 @@
 ```js
 import Form from 'react-validify'
 
-<Form rules={{ email: 'email|required', password: 'required|min:8' }}>
+<Form
+  initialValues={{email: 'test'}} //optional
+  rules={{ email: 'email|required', password: 'required|min:8' }}
+>
   <Input name="email" />
   <Input name="password" type="password" />
 
