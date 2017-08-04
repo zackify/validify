@@ -1,6 +1,15 @@
 ## React Validify
 
-`npm install react-validify`
+### Todo
+
+- Add 100% test coverage
+- refactor, split out instance methods into standalone functions
+
+## Install
+
+```
+npm install react-validify
+```
 
 ```js
 import Form from 'react-validify'
