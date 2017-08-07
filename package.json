@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Form validation made easy",
   "main": "dist/form.js",
   "directories": {
