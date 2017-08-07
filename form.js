@@ -85,7 +85,7 @@ export default class Form extends React.Component {
   }
 
   render() {
-    let { children, rules, ...props } = this.props;
+    let { children, rules, initialValues, ...props } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
   }
 }
