@@ -57,7 +57,8 @@ export default class Form extends React.Component {
   renderChildren(children) {
     return React.Children.map(children, child => {
       if (!child || !child.props) return child;
-      if (child.children) return this.renderChildren(children);
+      if (child.props.children)
+        return this.renderChildren(child.props.children);
 
       let { values, errors } = this.state;
 
