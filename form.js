@@ -12,7 +12,7 @@ export default class Form extends React.Component {
 
   componentWillReceiveProps({ errors, initialValues }) {
     if (initialValues !== this.props.initialValues)
-      this.setState({ initialValues });
+      this.setState({ values: initialValues });
 
     if (errors !== this.props.errors) this.setState({ errors });
   }
@@ -44,8 +44,9 @@ export default class Form extends React.Component {
     if (runner.fails() && values[name]) {
       return this.setState({ errors: { ...errors, ...runner.errors.errors } });
     }
-    if (errors[name])
+    if (errors[name]) {
       return this.setState({ errors: { ...errors, [name]: null } });
+    }
   }
 
   onChange({ target }) {
