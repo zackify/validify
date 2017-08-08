@@ -88,3 +88,23 @@ test('Error message is cleared after success on second blur', () => {
 
   expect(wrapper.find(Input).props().error).toEqual('');
 });
+
+test('Error is removed onChange if set before blurred', () => {
+  const wrapper = shallow(
+    <Form rules={{ Awesome: 'required' }}>
+      <Input name="Awesome" />
+      <div className="submit" submit />
+    </Form>
+  );
+  wrapper.find('.submit').simulate('click');
+  expect(wrapper.find(Input).props().error).toEqual(
+    'The Awesome field is required.'
+  );
+
+  wrapper
+    .find(Input)
+    .simulate('change', { target: { name: 'Awesome', value: 'fail' } });
+
+  expect(wrapper.find(Input).props().error).toEqual('');
+  expect(wrapper.find(Input).props().value).toEqual('fail');
+});

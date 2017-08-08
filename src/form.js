@@ -7,7 +7,7 @@ export default class Form extends React.Component {
     this.state = { values: initialValues || {}, errors: {} };
     this.onChange = this.onChange.bind(this);
     this.validate = this.validate.bind(this);
-    this.onBlur = this.onBlur.bind(this);
+    this.validateOnBlurOrChange = this.validateOnBlurOrChange.bind(this);
   }
 
   componentWillReceiveProps({ errors, initialValues }) {
@@ -31,7 +31,9 @@ export default class Form extends React.Component {
     return onClick(values);
   }
 
-  onBlur(name) {
+  validateOnBlurOrChange(name, onChange) {
+    if (onChange) onChange();
+
     let { rules } = this.props;
     let { errors, values } = this.state;
     if (!rules || !rules[name]) return;
@@ -41,7 +43,7 @@ export default class Form extends React.Component {
       { [name]: rules[name] }
     );
 
-    if (runner.fails() && values[name]) {
+    if (runner.fails() && values[name] && !onChange) {
       return this.setState({ errors: { ...errors, ...runner.errors.errors } });
     }
     if (errors[name]) {
@@ -68,8 +70,11 @@ export default class Form extends React.Component {
       if (child.props.name)
         return React.cloneElement(child, {
           children,
-          onChange: this.onChange,
-          onBlur: () => this.onBlur(child.props.name),
+          onChange: e =>
+            this.validateOnBlurOrChange(child.props.name, () =>
+              this.onChange(e)
+            ),
+          onBlur: () => this.validateOnBlurOrChange(child.props.name),
           error: errors[child.props.name] &&
             typeof errors[child.props.name] !== 'string'
             ? errors[child.props.name][0]
