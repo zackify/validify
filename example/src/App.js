@@ -10,12 +10,13 @@ class App extends Component {
         <Form rules={{ email: 'email|required', password: 'required|min:8' }}>
           <Input name="email" />
           <Input name="password" type="password" />
-
-          <div
-            submit
-            onClick={values => console.log('if validation passes, this logs')}
-          >
-            Submit!
+          <div>
+            <div
+              submit
+              onClick={values => console.log('if validation passes, this logs')}
+            >
+              Submit!
+            </div>
           </div>
         </Form>
       </div>

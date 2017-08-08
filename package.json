@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "Form validation made easy",
   "main": "dist/form.js",
   "directories": {
@@ -22,7 +22,7 @@
     "collectCoverage": false
   },
   "scripts": {
-    "build": "babel form.js --out-dir dist",
+    "build": "babel src --out-dir dist",
     "test": "jest",
     "test-ci": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
