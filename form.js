@@ -57,13 +57,16 @@ export default class Form extends React.Component {
   renderChildren(children) {
     return React.Children.map(children, child => {
       if (!child || !child.props) return child;
+
+      let children = child.props.children;
       if (child.props.children && typeof child.props.children !== 'string')
-        return this.renderChildren(child.props.children);
+        children = this.renderChildren(child.props.children);
 
       let { values, errors } = this.state;
 
       if (child.props.name)
         return React.cloneElement(child, {
+          children,
           onChange: this.onChange,
           onBlur: () => this.onBlur(child.props.name),
           error: errors[child.props.name] &&
@@ -78,10 +81,11 @@ export default class Form extends React.Component {
 
         return React.createElement(child.type, {
           ...otherProps,
+          children,
           onClick: () => this.validate(child.props.onClick),
         });
       }
-      return child;
+      return React.cloneElement(child, { children });
     });
   }
 

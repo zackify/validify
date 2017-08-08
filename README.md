@@ -1,4 +1,5 @@
 ## React Validify
+[![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 
 ### Todo
 

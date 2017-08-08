@@ -1,13 +1,29 @@
 {
   "name": "react-validify",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "Form validation made easy",
   "main": "dist/form.js",
   "directories": {
     "example": "example"
   },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ],
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "collectCoverageFrom": [
+      "form.js"
+    ],
+    "collectCoverage": true
+  },
   "scripts": {
-    "build": "babel form.js --out-dir dist"
+    "build": "babel form.js --out-dir dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,8 +44,14 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-jest": "^20.0.3",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1"
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.9.1",
+    "jest": "^20.0.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-test-renderer": "^15.6.1"
   }
 }
