@@ -1,6 +1,6 @@
 //Test that children are rendered and that submit works recursively
 import React from 'react';
-import Form from '../form';
+import Form from '../src/form';
 import { shallow } from 'enzyme';
 
 test('Children are rendered correctly with submit', () => {

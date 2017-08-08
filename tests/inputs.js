@@ -1,6 +1,6 @@
 //Test that components with the prop `name` get passed errors and values
 import React from 'react';
-import Form from '../form';
+import Form from '../src/form';
 import { shallow } from 'enzyme';
 
 const Input = ({ error, ...props }) =>
