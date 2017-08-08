@@ -17,14 +17,14 @@
       "js"
     ],
     "collectCoverageFrom": [
-      "form.js"
+      "src/form.js"
     ],
     "collectCoverage": false
   },
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "jest",
-    "test-ci": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-ci": "jest --coverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
