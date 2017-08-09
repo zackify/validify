@@ -16,9 +16,21 @@ test('Form passes in initial values', () => {
   expect(wrapper.find(Input).props().value).toEqual('i love testing!!!');
 });
 
-test('Form replaces values when initial values changes', () => {
+test('Form keeps value if it is set', () => {
   const wrapper = shallow(
     <Form initialValues={{ test: 'i love testing!!!' }}>
+      <Input name="test" />
+    </Form>
+  );
+
+  wrapper.setProps({ initialValues: { test: 'changed!' } });
+
+  expect(wrapper.find(Input).props().value).toEqual('i love testing!!!');
+});
+
+test('Form replaces values when initial values changes and not currently set', () => {
+  const wrapper = shallow(
+    <Form>
       <Input name="test" />
     </Form>
   );

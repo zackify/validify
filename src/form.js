@@ -4,17 +4,10 @@ import Validator from 'validatorjs';
 export default class Form extends React.Component {
   constructor({ initialValues }) {
     super();
-    this.state = { values: initialValues || {}, errors: {} };
+    this.state = { values: initialValues || {}, initialValues: {}, errors: {} };
     this.onChange = this.onChange.bind(this);
     this.validate = this.validate.bind(this);
     this.validateOnBlurOrChange = this.validateOnBlurOrChange.bind(this);
-  }
-
-  componentWillReceiveProps({ errors, initialValues }) {
-    if (initialValues !== this.props.initialValues)
-      this.setState({ values: initialValues });
-
-    if (errors !== this.props.errors) this.setState({ errors });
   }
 
   validate(onClick) {
@@ -65,7 +58,10 @@ export default class Form extends React.Component {
       if (child.props.children && typeof child.props.children !== 'string')
         children = this.renderChildren(child.props.children);
 
+      let { initialValues = {} } = this.props;
       let { values, errors } = this.state;
+
+      if (this.props.errors) errors = { ...errors, ...this.props.errors };
 
       if (child.props.name)
         return React.cloneElement(child, {
@@ -79,7 +75,8 @@ export default class Form extends React.Component {
             typeof errors[child.props.name] !== 'string'
             ? errors[child.props.name][0]
             : errors[child.props.name] || '',
-          value: values[child.props.name] || '',
+          value:
+            values[child.props.name] || initialValues[child.props.name] || '',
         });
 
       if (child.props.submit) {
