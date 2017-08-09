@@ -4,7 +4,7 @@ import Validator from 'validatorjs';
 export default class Form extends React.Component {
   constructor({ initialValues }) {
     super();
-    this.state = { values: initialValues || {}, initialValues: {}, errors: {} };
+    this.state = { values: initialValues || {}, errors: {} };
     this.onChange = this.onChange.bind(this);
     this.validate = this.validate.bind(this);
     this.validateOnBlurOrChange = this.validateOnBlurOrChange.bind(this);
