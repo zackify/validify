@@ -1,4 +1,5 @@
 import React from 'react';
+import getError from './get-error';
 import Validator from 'validatorjs';
 
 export default class Form extends React.Component {
@@ -61,22 +62,15 @@ export default class Form extends React.Component {
       let { initialValues = {} } = this.props;
       let { values, errors } = this.state;
 
-      if (this.props.errors) errors = { ...errors, ...this.props.errors };
-
-      if (child.props.name)
+      let { name, submit } = child.props;
+      if (name)
         return React.cloneElement(child, {
           children,
           onChange: e =>
-            this.validateOnBlurOrChange(child.props.name, () =>
-              this.onChange(e)
-            ),
-          onBlur: () => this.validateOnBlurOrChange(child.props.name),
-          error: errors[child.props.name] &&
-            typeof errors[child.props.name] !== 'string'
-            ? errors[child.props.name][0]
-            : errors[child.props.name] || '',
-          value:
-            values[child.props.name] || initialValues[child.props.name] || '',
+            this.validateOnBlurOrChange(name, () => this.onChange(e)),
+          onBlur: () => this.validateOnBlurOrChange(name),
+          error: getError(errors, this.props.errors, name),
+          value: values[name] || initialValues[name] || '',
         });
 
       if (child.props.submit) {
