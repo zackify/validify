@@ -14,6 +14,7 @@ import Form from 'react-validify'
 <Form
   initialValues={{email: 'test'}} //optional
   rules={{ email: 'email|required', password: 'required|min:8' }}
+  errorMessages={{'required.email': 'Custom error message', 'min.password': 'Custom min password required error message.'}} //optional
 >
   <Input name="email" />
   <Input name="password" type="password" />
@@ -32,6 +33,7 @@ import Form from 'react-validify'
 
 This component is the simplest way to validate form inputs in React. There's two things to learn. The Form accepts a prop called `rules`. This is an object with the names of all yours inputs and the rules for them. Rules can be found [here](https://github.com/skaterdav85/validatorjs#available-rules). Place the `submit` prop on any element that you want to trigger the validation. The onClick will not be triggered until the rules pass. If validation fails, error messages will be passed to the inputs as an error prop.
 
+The `errorMessages` prop on `Form` is optional and allows you provide custom error messages as specified by [validatorjs's docs](https://github.com/skaterdav85/validatorjs#custom-error-messages).
 
 Workflow:
 
