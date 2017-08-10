@@ -62,9 +62,9 @@ You can see a list of rules [here](https://github.com/skaterdav85/validatorjs#av
 Custom error messages. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-error-messages)
 ```js
 errorMessages={{
-  'required.email': 'Custom error message', 
+  'required.email': 'Custom error message',
   'min.password': 'Custom min password required error message.'
-}} 
+}}
 ```
 
 **initialValues**
@@ -72,6 +72,15 @@ errorMessages={{
 Set values when the form is first rendered.
 ```js
 initialValues={{name: 'set'}}
+```
+
+**attributeNames**
+
+Custom attribute names. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-attribute-names). Currently does not support validatorjs's `attributeFormatter`.
+```js
+attributeNames={{
+  email: 'Email address'
+}}
 ```
 
 **errors**
