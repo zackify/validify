@@ -57,12 +57,10 @@ export default ({ error, ...props }) => {
 
 You can see a list of rules [here](https://github.com/skaterdav85/validatorjs#available-rules)
 
-`Form` accepts a few more props for those that need to customize things.
-
 **errorMessages**
 
 Custom error messages. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-error-messages)
-```
+```js
 errorMessages={{
   'required.email': 'Custom error message', 
   'min.password': 'Custom min password required error message.'
@@ -72,7 +70,7 @@ errorMessages={{
 **initialValues**
 
 Set values when the form is first rendered.
-```
+```js
 initialValues={{name: 'set'}}
 ```
 
@@ -80,6 +78,6 @@ initialValues={{name: 'set'}}
 
 Set errors manually, in case the server comes back with messages.
 
-```
-initialValues={{name: 'set'}}
+```js
+errors={{name: 'Email is invalid...'}}
 ```
