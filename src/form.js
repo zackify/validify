@@ -12,11 +12,11 @@ export default class Form extends React.Component {
   }
 
   validate(onClick) {
-    let { rules } = this.props;
+    let { rules, errorMessages = {} } = this.props;
     let { values } = this.state;
     if (!rules) return onClick(values);
 
-    const runner = new Validator(values, rules);
+    const runner = new Validator(values, rules, errorMessages);
 
     if (runner.fails()) {
       return this.setState({ errors: runner.errors.errors });
@@ -28,15 +28,15 @@ export default class Form extends React.Component {
   validateOnBlurOrChange(name, onChange) {
     if (onChange) onChange();
 
-    let { rules } = this.props;
+    let { rules, errorMessages = {} } = this.props;
     let { errors, values } = this.state;
     if (!rules || !rules[name]) return;
 
     const runner = new Validator(
       { [name]: values[name] },
-      { [name]: rules[name] }
+      { [name]: rules[name] },
+      errorMessages,
     );
-
     if (runner.fails() && values[name] && !onChange) {
       return this.setState({ errors: { ...errors, ...runner.errors.errors } });
     }
@@ -87,7 +87,7 @@ export default class Form extends React.Component {
   }
 
   render() {
-    let { children, rules, initialValues, ...props } = this.props;
+    let { children, rules, errorMessages, initialValues, ...props } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
   }
 }
