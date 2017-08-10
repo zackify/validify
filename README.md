@@ -70,12 +70,14 @@ errorMessages={{
 ```
 
 **initialValues**
+
 Set values when the form is first rendered.
 ```
 initialValues={{name: 'set'}}
 ```
 
 **errors**
+
 Set errors manually, in case the server comes back with messages.
 
 ```
