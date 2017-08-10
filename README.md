@@ -59,7 +59,8 @@ You can see a list of rules [here](https://github.com/skaterdav85/validatorjs#av
 
 `Form` accepts a few more props for those that need to customize things.
 
-*errorMessages*
+**errorMessages**
+
 Custom error messages. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-error-messages)
 ```
 errorMessages={{
