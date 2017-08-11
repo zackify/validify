@@ -1,6 +1,7 @@
 example
 .babelrc
-form.js
+src
+.all-contributorsrc
 README.md
 circle.yml
 coverage
