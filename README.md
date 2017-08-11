@@ -66,12 +66,18 @@ errorMessages={{
   'min.password': 'Custom min password required error message.'
 }}
 ```
+**onValues**
 
-**initialValues**
+exposes the values on change, you must manage the form state by passing in values if using this.
+```js
+onValues={values => this.setState({ values })}
+```
+
+**values**
 
 Set values when the form is first rendered.
 ```js
-initialValues={{name: 'set'}}
+values={{name: 'set'}}
 ```
 
 **attributeNames**
