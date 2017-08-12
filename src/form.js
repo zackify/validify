@@ -3,9 +3,9 @@ import getError from './get-error';
 import Validator from 'validatorjs';
 
 export default class Form extends React.Component {
-  constructor({ initialValues }) {
+  constructor({ values = {}, onValues }) {
     super();
-    this.state = { values: initialValues || {}, errors: {} };
+    this.state = { values: onValues ? {} : values, errors: {} };
     this.onChange = this.onChange.bind(this);
     this.validate = this.validate.bind(this);
     this.validateOnBlurOrChange = this.validateOnBlurOrChange.bind(this);
@@ -36,7 +36,7 @@ export default class Form extends React.Component {
     const runner = new Validator(
       { [name]: values[name] },
       { [name]: rules[name] },
-      errorMessages,
+      errorMessages
     );
     runner.setAttributeNames(attributeNames);
 
@@ -50,7 +50,11 @@ export default class Form extends React.Component {
 
   onChange({ target }) {
     let { values } = this.state;
+    let { onValues } = this.props;
     values[target.name] = target.value;
+
+    if (onValues) return onValues({ ...values });
+
     this.setState({ values });
   }
 
@@ -62,8 +66,8 @@ export default class Form extends React.Component {
       if (child.props.children && typeof child.props.children !== 'string')
         children = this.renderChildren(child.props.children);
 
-      let { initialValues = {} } = this.props;
-      let { values, errors } = this.state;
+      let { values = {} } = this.props;
+      let { errors } = this.state;
 
       let { name, submit } = child.props;
       if (name)
@@ -73,7 +77,7 @@ export default class Form extends React.Component {
             this.validateOnBlurOrChange(name, () => this.onChange(e)),
           onBlur: () => this.validateOnBlurOrChange(name),
           error: getError(errors, this.props.errors, name),
-          value: values[name] || initialValues[name] || '',
+          value: this.state.values[name] || values[name] || '',
         });
 
       if (child.props.submit) {
@@ -90,7 +94,15 @@ export default class Form extends React.Component {
   }
 
   render() {
-    let { children, rules, errorMessages, attributeNames, initialValues, ...props } = this.props;
+    let {
+      children,
+      rules,
+      errorMessages,
+      attributeNames,
+      values,
+      onValues,
+      ...props
+    } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
   }
 }
