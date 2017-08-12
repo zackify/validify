@@ -68,7 +68,7 @@ errorMessages={{
 ```
 **onValues**
 
-exposes the values on change, you must manage the form state by passing in values if using this.
+exposes the values on change, you must manage the form state by passing in values if using this. Ex: `values={this.state.values}` must be passed too, if using the example below)
 ```js
 onValues={values => this.setState({ values })}
 ```

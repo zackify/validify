@@ -1,4 +1,4 @@
-//Test things dealing with the initialValues prop
+//Test things dealing with onValues prop
 import React from 'react';
 import { spy } from 'sinon';
 import Form from '../src/form';
