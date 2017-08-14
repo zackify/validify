@@ -101,7 +101,7 @@ export default class Form extends React.Component {
       attributeNames,
       values,
       onValues,
-      error,
+      errors,
       ...props
     } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
