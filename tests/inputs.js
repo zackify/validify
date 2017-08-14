@@ -108,3 +108,14 @@ test('Error is removed onChange if set before blurred', () => {
   expect(wrapper.find(Input).props().error).toEqual('');
   expect(wrapper.find(Input).props().value).toEqual('fail');
 });
+
+test('Form validates with valid initial values passed', () => {
+  const wrapper = shallow(
+    <Form rules={{ Awesome: 'required' }} values={{ Awesome: 'hello' }}>
+      <Input name="Awesome" />
+      <div className="submit" submit />
+    </Form>,
+  );
+  wrapper.find('.submit').simulate('click');
+  expect(wrapper.find(Input).props().error).toEqual('');
+});

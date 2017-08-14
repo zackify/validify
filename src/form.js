@@ -23,7 +23,7 @@ export default class Form extends React.Component {
       return this.setState({ errors: runner.errors.errors });
     } else this.setState({ errors: {} });
 
-    return onClick(values);
+    if (onClick) return onClick(values);
   }
 
   validateOnBlurOrChange(name, onChange) {
