@@ -1,24 +1,18 @@
 {
   "name": "react-validify",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Form validation made easy",
   "main": "dist/form.js",
   "directories": {
     "example": "example"
   },
   "jest": {
-    "testMatch": [
-      "<rootDir>/tests/**/*.js"
-    ],
+    "testMatch": ["<rootDir>/tests/**/*.js"],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
-    "moduleFileExtensions": [
-      "js"
-    ],
-    "collectCoverageFrom": [
-      "src/form.js"
-    ],
+    "moduleFileExtensions": ["js"],
+    "collectCoverageFrom": ["src/form.js"],
     "collectCoverage": false
   },
   "scripts": {
@@ -30,10 +24,7 @@
     "type": "git",
     "url": "git+https://github.com/navjobs/validify.git"
   },
-  "keywords": [
-    "form",
-    "validation"
-  ],
+  "keywords": ["form", "validation"],
   "author": "Zach Silveira",
   "license": "ISC",
   "bugs": {
