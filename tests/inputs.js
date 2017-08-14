@@ -1,6 +1,5 @@
 //Test that components with the prop `name` get passed errors and values
 import React from 'react';
-import { spy } from 'sinon';
 import Form from '../src/form';
 import { shallow } from 'enzyme';
 
@@ -111,7 +110,7 @@ test('Error is removed onChange if set before blurred', () => {
 });
 
 test('Form validates with valid initial values passed and onValues prop passed', () => {
-  const onValues = spy();
+  const onValues = jest.fn();
   const wrapper = shallow(
     <Form
       rules={{ Awesome: 'required' }}
@@ -124,6 +123,6 @@ test('Form validates with valid initial values passed and onValues prop passed',
   );
   wrapper.find('.submit').simulate('click');
   expect(wrapper.find(Input).props().error).toEqual('');
-  expect(onValues.calledOnce).toEqual(true);
-  expect(onValues.args[0][0].Awesome).toEqual('hello');
+  expect(onValues).toHaveBeenCalledTimes(1);
+  expect(onValues.mock.calls[0][0].Awesome).toEqual('hello');
 });
