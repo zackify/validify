@@ -14,7 +14,10 @@ export default class Form extends React.Component {
   validate(onClick) {
     let { rules, errorMessages = {}, attributeNames = {} } = this.props;
     let { values } = this.state;
-    if (!rules) return onClick(values);
+    if (!rules) {
+      if (onClick) return onClick(values);
+      return;
+    }
 
     const runner = new Validator(values, rules, errorMessages);
     runner.setAttributeNames(attributeNames);
