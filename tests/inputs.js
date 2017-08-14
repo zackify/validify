@@ -2,6 +2,7 @@
 import React from 'react';
 import { spy } from 'sinon';
 import Form from '../src/form';
+import { spy } from 'sinon';
 import { shallow } from 'enzyme';
 
 const Input = ({ error, ...props }) =>
@@ -140,6 +141,17 @@ test('Form validates with valid initial values passed', () => {
   spy.mockClear();
 });
 
+test('Form validates with valid initial values passed and onValues prop passed', () => {
+  const onValues = spy();
+  const wrapper = shallow(
+    <Form
+      rules={{ Awesome: 'required' }}
+      values={{ Awesome: 'hello' }}
+      onValues={onValues}
+    >
+      <Input name="Awesome" />
+      <div className="submit" submit />
+    </Form>
   );
   wrapper.find('.submit').simulate('click');
   expect(wrapper.find(Input).props().error).toEqual('');
