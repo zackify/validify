@@ -1,6 +1,5 @@
 //Tests related to the submit prop
 import React from 'react';
-import { spy } from 'sinon';
 import Form from '../src/form';
 import { shallow } from 'enzyme';
 
@@ -21,7 +20,7 @@ test('Submit triggers validation', () => {
 });
 
 test('Submit clears errors after passing and calls onClick', () => {
-  let onClick = spy();
+  let onClick = jest.fn();
 
   const wrapper = shallow(
     <Form rules={{ test: 'required' }}>
@@ -44,11 +43,11 @@ test('Submit clears errors after passing and calls onClick', () => {
 
   expect(wrapper.find(Input).props().error).toEqual('');
 
-  expect(onClick.calledOnce).toEqual(true);
+  expect(onClick).toHaveBeenCalledTimes(1);
 });
 
 test('Submit skips validation if no rules', () => {
-  let onClick = spy();
+  let onClick = jest.fn();
 
   const wrapper = shallow(
     <Form>
@@ -58,5 +57,5 @@ test('Submit skips validation if no rules', () => {
   );
 
   wrapper.find('.submit').simulate('click');
-  expect(onClick.calledOnce).toEqual(true);
+  expect(onClick).toHaveBeenCalledTimes(1);
 });
