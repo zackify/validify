@@ -23,8 +23,8 @@ import Form from 'react-validify'
   <div
     submit
     onClick={values =>
-      console.log('
-        this will be called if validation passes', 
+      console.log(
+        'this will be called if validation passes', 
         values
       )
     }
