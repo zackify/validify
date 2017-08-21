@@ -12,7 +12,10 @@ npm install react-validify
 import Form from 'react-validify'
 
 <Form
-  rules={{ email: 'email|required', password: 'required|min:8' }}
+  rules={{ 
+    email: 'email|required', 
+    password: 'required|min:8' 
+  }}
 >
   <Input name="email" />
   <Input name="password" type="password" />
@@ -20,7 +23,11 @@ import Form from 'react-validify'
   <div
     submit
     onClick={values =>
-      console.log('this will be called if validation passes', values)}
+      console.log('
+        this will be called if validation passes', 
+        values
+      )
+    }
   >
     Submit!
   </div>
