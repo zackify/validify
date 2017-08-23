@@ -12,9 +12,9 @@ npm install react-validify
 import Form from 'react-validify'
 
 <Form
-  rules={{ 
-    email: 'email|required', 
-    password: 'required|min:8' 
+  rules={{
+    email: 'email|required',
+    password: 'required|min:8'
   }}
 >
   <Input name="email" />
@@ -24,7 +24,7 @@ import Form from 'react-validify'
     submit
     onClick={values =>
       console.log(
-        'this will be called if validation passes', 
+        'this will be called if validation passes',
         values
       )
     }
@@ -85,6 +85,14 @@ onValues={values => this.setState({ values })}
 Set values when the form is first rendered.
 ```js
 values={{name: 'set'}}
+```
+
+**onEnter**
+
+Triggers a submit when enter is pressed on an input
+
+```js
+<Input name="email"  onEnter={this.submit}/>
 ```
 
 **attributeNames**

@@ -1,6 +1,8 @@
 import React from 'react';
-import getError from './get-error';
+import Input from './input';
+import Submit from './submit';
 import Validator from 'validatorjs';
+import GetChildren from './get-children';
 
 export default class Form extends React.Component {
   constructor({ values = {}, onValues }) {
@@ -62,33 +64,14 @@ export default class Form extends React.Component {
     return React.Children.map(children, child => {
       if (!child || !child.props) return child;
 
-      let children = child.props.children;
-      if (child.props.children && typeof child.props.children !== 'string')
-        children = this.renderChildren(child.props.children);
+      let children = GetChildren(child, this);
 
       let { values = {} } = this.props;
       let { errors } = this.state;
 
-      let { name, submit } = child.props;
-      if (name)
-        return React.cloneElement(child, {
-          children,
-          onChange: e =>
-            this.validateOnBlurOrChange(name, () => this.onChange(e)),
-          onBlur: () => this.validateOnBlurOrChange(name),
-          error: getError(errors, this.props.errors, name),
-          value: this.state.values[name] || values[name] || '',
-        });
+      if (child.props.name) return Input(child, values, children, errors, this);
+      if (child.props.submit) return Submit(child, children, this);
 
-      if (child.props.submit) {
-        let { submit, ...otherProps } = child.props;
-
-        return React.createElement(child.type, {
-          ...otherProps,
-          children,
-          onClick: () => this.validate(child.props.onClick),
-        });
-      }
       return React.cloneElement(child, { children });
     });
   }
@@ -104,6 +87,10 @@ export default class Form extends React.Component {
       errors,
       ...props
     } = this.props;
-    return <div {...props}>{this.renderChildren(children)}</div>;
+    return (
+      <div {...props}>
+        {this.renderChildren(children)}
+      </div>
+    );
   }
 }
