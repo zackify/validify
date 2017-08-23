@@ -36,3 +36,19 @@ test('onEnter prop not called when keyCode is 13 and rules are invalid', () => {
 
   expect(onEnter).toHaveBeenCalledTimes(0);
 });
+
+test('onKeyUp is always called', () => {
+  const onEnter = jest.fn();
+  const onKeyUp = jest.fn();
+
+  const wrapper = shallow(
+    <Form values={{ test: 'yes!' }} rules={{ test: 'min:9' }}>
+      <Input name="test" onEnter={onEnter} onKeyUp={onKeyUp} />
+    </Form>
+  );
+
+  wrapper.find(Input).simulate('keyup', { keyCode: 13 });
+
+  expect(onEnter).toHaveBeenCalledTimes(0);
+  expect(onKeyUp).toHaveBeenCalledTimes(1);
+});
