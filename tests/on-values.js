@@ -1,10 +1,14 @@
 //Test things dealing with onValues prop
 import React from 'react';
 import Form from '../src/form';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 
 const Input = ({ error, ...props }) =>
-  error ? <p className="error">{error}</p> : <input {...props} />;
+  error
+    ? <p className="error">
+        {error}
+      </p>
+    : <input {...props} />;
 
 test('Form passes values to onValues', () => {
   const onValues = jest.fn();
@@ -39,4 +43,38 @@ test('Form sets values on prop change', () => {
   expect(wrapper.find(Input).props().value).toEqual('false');
   wrapper.setProps({ values: { test: 'changed!' } });
   expect(wrapper.find(Input).props().value).toEqual('changed!');
+});
+
+test('onValues does not mutate state', () => {
+  let onClick = jest.fn();
+
+  class Test extends React.Component {
+    constructor() {
+      super();
+      this.state = { values: { test: 'Set' } };
+    }
+
+    render() {
+      return (
+        <Form
+          values={this.state.values}
+          onValues={values => this.setState({ values })}
+        >
+          <Input name="test" />
+          <div
+            submit
+            className="submit"
+            onClick={() => this.setState({ values: { test: '' } })}
+          />
+        </Form>
+      );
+    }
+  }
+  const wrapper = mount(<Test />);
+  wrapper
+    .find(Input)
+    .simulate('change', { target: { name: 'test', value: 'Setting' } });
+
+  wrapper.find('.submit').simulate('click');
+  expect(wrapper.find(Input).props().value).toEqual('');
 });

@@ -4,7 +4,11 @@ import Form from '../src/form';
 import { shallow } from 'enzyme';
 
 const Input = ({ error, ...props }) =>
-  error ? <p className="error">{error}</p> : <input {...props} />;
+  error
+    ? <p className="error">
+        {error}
+      </p>
+    : <input {...props} />;
 
 test('Submit triggers validation', () => {
   const wrapper = shallow(

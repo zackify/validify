@@ -51,8 +51,9 @@ export default class Form extends React.Component {
   }
 
   onChange({ target }) {
-    let { values } = this.state;
     let { onValues } = this.props;
+    let values = { ...this.props.values, ...this.state.values };
+
     values[target.name] = target.value;
 
     if (onValues) return onValues({ ...values });
