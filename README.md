@@ -2,6 +2,10 @@
 [![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 [![Coverage Status](https://coveralls.io/repos/github/navjobs/validify/badge.svg?branch=master)](https://coveralls.io/github/navjobs/validify?branch=master)
 
+## Why
+
+Validating form inputs in React is one of two things. A manual process that you build into every app, or something you get from pulling in a huge library. This package aims to provide form validation with the smallest amount of code change to your apps! Make a small field wrapper that receives input props and handles error messages, set some rules, and that's it!
+
 ## Install
 
 ```
