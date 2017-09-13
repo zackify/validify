@@ -54,7 +54,7 @@ export default class Form extends React.Component {
     let { onValues } = this.props;
     let values = { ...this.props.values, ...this.state.values };
 
-    values[target.name] = target.value;
+    values[target.name] = target.checked || target.value;
 
     if (onValues) return onValues({ ...values });
 
@@ -88,10 +88,6 @@ export default class Form extends React.Component {
       errors,
       ...props
     } = this.props;
-    return (
-      <div {...props}>
-        {this.renderChildren(children)}
-      </div>
-    );
+    return <div {...props}>{this.renderChildren(children)}</div>;
   }
 }
