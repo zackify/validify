@@ -18,4 +18,10 @@ test('Input works with checkbox', () => {
     .simulate('change', { target: { name: 'Awesome', checked: true } });
 
   expect(wrapper.find(Input).props().value).toEqual(true);
+
+  wrapper
+    .find(Input)
+    .simulate('change', { target: { name: 'Awesome', checked: false } });
+
+  expect(wrapper.find(Input).props().value).toEqual(false);
 });

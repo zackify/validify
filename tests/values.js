@@ -6,6 +6,16 @@ import { shallow } from 'enzyme';
 const Input = ({ error, ...props }) =>
   error ? <p className="error">{error}</p> : <input {...props} />;
 
+test('Form sets value to empty string', () => {
+  const wrapper = shallow(
+    <Form>
+      <Input name="test" />
+    </Form>
+  );
+
+  expect(wrapper.find(Input).props().value).toEqual('');
+});
+
 test('Form passes in initial values', () => {
   const wrapper = shallow(
     <Form values={{ test: 'i love testing!!!' }}>

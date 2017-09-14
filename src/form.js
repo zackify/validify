@@ -54,7 +54,10 @@ export default class Form extends React.Component {
     let { onValues } = this.props;
     let values = { ...this.props.values, ...this.state.values };
 
-    values[target.name] = target.checked || target.value;
+    values[target.name] =
+      target.checked || target.checked === false
+        ? target.checked
+        : target.value;
 
     if (onValues) return onValues({ ...values });
 

@@ -11,7 +11,12 @@ export default (child, propValues, children, errors, component) => {
       component.validateOnBlurOrChange(name, () => component.onChange(e)),
     onBlur: () => component.validateOnBlurOrChange(name),
     error: getError(errors, component.props.errors, name),
-    value: component.state.values[name] || propValues[name] || '',
+    value:
+      component.state.values[name] || component.state.values[name] === false
+        ? component.state.values[name]
+        : propValues[name] || propValues[name] === false
+          ? propValues[name]
+          : '',
     onKeyUp: e => {
       if (onKeyUp) onKeyUp(e);
       if (e.keyCode !== 13) return;
