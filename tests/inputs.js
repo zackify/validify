@@ -13,11 +13,9 @@ test('Input is passed in value correctly', () => {
     </Form>
   );
 
-  wrapper
-    .find(Input)
-    .simulate('change', {
-      target: { name: 'Awesome', value: 'yes', checked: false },
-    });
+  wrapper.find(Input).simulate('change', {
+    target: { name: 'Awesome', value: 'yes', checked: false },
+  });
 
   expect(wrapper.find(Input).props().value).toEqual('yes');
 });
@@ -25,13 +23,15 @@ test('Input is passed in value correctly', () => {
 test('Input gets error message', () => {
   const wrapper = shallow(
     <Form rules={{ Awesome: 'required|min:8' }}>
-      <Input name="Awesome" />
+      <Input name="Awesome" type="password" />
     </Form>
   );
 
   wrapper
     .find(Input)
-    .simulate('change', { target: { name: 'Awesome', value: 'fail' } });
+    .simulate('change', {
+      target: { name: 'Awesome', value: 'fail', type: 'password' },
+    });
   wrapper.find(Input).simulate('blur');
 
   expect(wrapper.find(Input).props().error).toEqual(

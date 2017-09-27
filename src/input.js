@@ -9,7 +9,7 @@ const filters = {
 };
 
 const getValue = (type, values) => {
-  let filter = filters[type || 'text'];
+  let filter = filters[type] || filters.text;
 
   let value = filter(values.filter(filter)[0]);
   if (value || value === false) return value;
