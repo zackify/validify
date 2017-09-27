@@ -3,16 +3,16 @@ import React from 'react';
 import getError from './get-error';
 
 const filters = {
-  checkbox: value => value || value === false,
-  radio: value => value || value === false,
-  default: value => value,
+  checkbox: value => value || false,
+  radio: value => value || false,
+  text: value => value,
 };
 
 const getValue = (type, values) => {
-  let filter = filters[type] || filters.default;
+  let filter = filters[type || 'text'];
 
-  let value = values.filter(filter)[0];
-  if (filter(value)) return value;
+  let value = filter(values.filter(filter)[0]);
+  if (value || value === false) return value;
 
   return '';
 };

@@ -55,7 +55,7 @@ export default class Form extends React.Component {
     let values = { ...this.props.values, ...this.state.values };
 
     values[target.name] =
-      target.checked || target.checked === false
+      target.type === 'checkbox' || target.type === 'radio'
         ? target.checked
         : target.value;
 

@@ -15,7 +15,9 @@ test('Input is passed in value correctly', () => {
 
   wrapper
     .find(Input)
-    .simulate('change', { target: { name: 'Awesome', value: 'yes' } });
+    .simulate('change', {
+      target: { name: 'Awesome', value: 'yes', checked: false },
+    });
 
   expect(wrapper.find(Input).props().value).toEqual('yes');
 });

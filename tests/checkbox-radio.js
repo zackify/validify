@@ -15,13 +15,17 @@ test('Input works with checkbox', () => {
 
   wrapper
     .find(Input)
-    .simulate('change', { target: { name: 'Awesome', checked: true } });
+    .simulate('change', {
+      target: { name: 'Awesome', checked: true, type: 'checkbox' },
+    });
 
   expect(wrapper.find(Input).props().value).toEqual(true);
 
   wrapper
     .find(Input)
-    .simulate('change', { target: { name: 'Awesome', checked: false } });
+    .simulate('change', {
+      target: { name: 'Awesome', checked: false, type: 'checkbox' },
+    });
 
   expect(wrapper.find(Input).props().value).toEqual(false);
 });
