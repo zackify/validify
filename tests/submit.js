@@ -63,3 +63,21 @@ test('Submit skips validation if no rules', () => {
   wrapper.find('.submit').simulate('click');
   expect(onClick).toHaveBeenCalledTimes(1);
 });
+
+test('Submit calls onError prop function', () => {
+
+  let onError = jest.fn();
+
+  const wrapper = shallow(
+    <Form rules={{ test: 'required|min:8' }} onError={onError}>
+      <Input name="test" />
+      <div submit className="submit" />
+    </Form>
+  );
+
+  wrapper.find('.submit').simulate('click');
+
+  expect(onError).toHaveBeenCalledTimes(1);
+  expect( onError.mock.calls[0][0].test ).toEqual( ['The test field is required.'] );
+
+});
