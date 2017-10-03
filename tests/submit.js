@@ -1,7 +1,7 @@
 //Tests related to the submit prop
 import React from 'react';
 import Form from '../src/form';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 const Input = ({ error, ...props }) =>
   error
