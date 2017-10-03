@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Input from './input';
 import Submit from './submit';
 import Validator from 'validatorjs';
 import GetChildren from './get-children';
 
 export default class Form extends React.Component {
+
   constructor({ values = {}, onValues }) {
     super();
     this.state = { values: onValues ? {} : values, errors: {} };
@@ -22,8 +24,12 @@ export default class Form extends React.Component {
     runner.setAttributeNames(attributeNames);
 
     if (runner.fails()) {
+      this.props.onError(runner.errors.errors);
       return this.setState({ errors: runner.errors.errors });
-    } else this.setState({ errors: {} });
+    } else {
+      this.props.onError({});
+      this.setState({ errors: {} });
+    }
 
     return onClick(values);
   }
@@ -93,4 +99,12 @@ export default class Form extends React.Component {
     } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
   }
+}
+
+Form.defaultProps = {
+  onError: () => {}
+}
+
+Form.propTypes = {
+  onError: PropTypes.func
 }
