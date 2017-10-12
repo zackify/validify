@@ -1,10 +1,10 @@
 //Test that children are rendered and that submit works recursively
 import React from 'react';
 import Form from '../src/form';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 test('Children are rendered correctly with submit', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form>
       <div className="parent">
         <div className="sub-parent">
@@ -19,7 +19,7 @@ test('Children are rendered correctly with submit', () => {
 });
 
 test('Children are rendered correctly with null child', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form>
       <div className="parent">
         <div className="sub-parent">

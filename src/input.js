@@ -8,25 +8,26 @@ const filters = {
   text: value => value,
 };
 
-const getValue = (type, values) => {
+const getValue = (type, rawValue) => {
   let filter = filters[type] || filters.text;
 
-  let value = filter(values.filter(filter)[0]);
+  let value = filter(rawValue);
   if (value || value === false) return value;
 
   return '';
 };
 
-export default (child, propValues, children, errors, component) => {
+export default (child, values, children, errors, component) => {
   let { name, onKeyUp, onEnter, type } = child.props;
-
   return React.cloneElement(child, {
     children,
     onChange: e =>
-      component.validateOnBlurOrChange(name, () => component.onChange(e)),
-    onBlur: () => component.validateOnBlurOrChange(name),
-    error: getError(errors, component.props.errors, name),
-    value: getValue(type, [component.state.values[name], propValues[name]]),
+      component.validateOnBlurOrChange(name, e.target.value, () =>
+        component.onChange(e)
+      ),
+    onBlur: e => component.validateOnBlurOrChange(name, e.target.value),
+    error: getError(errors, name),
+    value: getValue(type, values[name]),
     onKeyUp: e => {
       if (onKeyUp) onKeyUp(e);
       if (e.keyCode !== 13) return;

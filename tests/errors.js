@@ -1,25 +1,59 @@
 //Test things dealing with the values prop
 import React from 'react';
-import Form from '../src/form';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import BaseForm from '../src/base';
 
-const Input = ({ error, ...props }) =>
-  error ? <p className="error">{error}</p> : <input {...props} />;
+const Input = ({ error, ...props }) => (
+  <div>
+    {error ? <p className="error">{error}</p> : null}
+    <input {...props} />
+  </div>
+);
+
+class Form extends React.Component {
+  constructor({ values = {}, errors = {} }) {
+    super();
+    this.state = { values, errors };
+  }
+
+  render() {
+    let { values, errors } = this.state;
+    let { children, ...props } = this.props;
+    return (
+      <BaseForm
+        {...props}
+        values={values}
+        errors={errors}
+        onValues={values => {
+          //console.log(values, 'values');
+          this.setState({ values });
+        }}
+        onErrors={errors => {
+          //console.log(errors, 'wtf');
+          this.setState({ errors });
+        }}
+      >
+        {children}
+      </BaseForm>
+    );
+  }
+}
 
 test('Form sets errors from prop', () => {
-  const wrapper = shallow(
-    <Form values={{ test: 'i love testing!!!' }}>
+  const wrapper = mount(
+    <Form
+      values={{ test: 'i love testing!!!' }}
+      errors={{ test: 'failed because blah' }}
+    >
       <Input name="test" />
     </Form>
   );
-
-  wrapper.setProps({ errors: { test: 'failed because blah' } });
 
   expect(wrapper.find(Input).props().error).toEqual('failed because blah');
 });
 
 test('Form sets custom error message from prop', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       rules={{ test: 'required|min:8' }}
       errorMessages={{
@@ -33,14 +67,16 @@ test('Form sets custom error message from prop', () => {
   );
 
   wrapper
-    .find(Input)
+    .find('input')
     .simulate('change', { target: { name: 'test', value: 'fail' } });
-  wrapper.find(Input).simulate('blur');
+  wrapper
+    .find('input', { target: { name: 'test', value: 'fail' } })
+    .simulate('blur');
   expect(wrapper.find(Input).props().error).toEqual('I am a custom message!');
 });
 
 test('Form sets custom error message on submit', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       values={{ test: '' }}
       rules={{ test: 'required' }}
@@ -60,7 +96,7 @@ test('Form sets custom error message on submit', () => {
 });
 
 test('Form sets custom error message when an errorMessage key is not used', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       values={{ test: '' }}
       rules={{ test: 'required' }}
@@ -81,7 +117,7 @@ test('Form sets custom error message when an errorMessage key is not used', () =
 });
 
 test('Form sets custom error message when multiple errorMessage keys are used', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       values={{ test: '', other: 'roar' }}
       rules={{ test: 'required', other: 'max:3' }}
@@ -97,14 +133,22 @@ test('Form sets custom error message when multiple errorMessage keys are used', 
     </Form>
   );
   wrapper.find('.button').simulate('click');
-  expect(wrapper.find(Input).first().props().error).toEqual(
-    'wow, so field, much required.'
-  );
-  expect(wrapper.find(Input).last().props().error).toEqual('Heyo');
+  expect(
+    wrapper
+      .find(Input)
+      .first()
+      .props().error
+  ).toEqual('wow, so field, much required.');
+  expect(
+    wrapper
+      .find(Input)
+      .last()
+      .props().error
+  ).toEqual('Heyo');
 });
 
 test('Form allows custom attribute names in default error messages', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       rules={{ test: 'required|min:8' }}
       attributeNames={{ test: 'custom name' }}
@@ -115,21 +159,22 @@ test('Form allows custom attribute names in default error messages', () => {
   );
 
   wrapper
-    .find(Input)
+    .find('input')
     .simulate('change', { target: { name: 'test', value: 'fail' } });
-  wrapper.find(Input).simulate('blur');
+  wrapper.find('input').simulate('blur');
   expect(wrapper.find(Input).props().error).toEqual(
     'The custom name must be at least 8 characters.'
   );
 });
 
 test('Form allows custom attribute names in custom error messages', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       rules={{ test: 'required|min:8' }}
       attributeNames={{ test: 'custom name' }}
       errorMessages={{
-        'min.test': 'Custom error message with attribute name set to :attribute',
+        'min.test':
+          'Custom error message with attribute name set to :attribute',
       }}
     >
       <Input name="test" />
@@ -138,16 +183,16 @@ test('Form allows custom attribute names in custom error messages', () => {
   );
 
   wrapper
-    .find(Input)
+    .find('input')
     .simulate('change', { target: { name: 'test', value: 'fail' } });
-  wrapper.find(Input).simulate('blur');
+  wrapper.find('input').simulate('blur');
   expect(wrapper.find(Input).props().error).toEqual(
     'Custom error message with attribute name set to custom name'
   );
 });
 
 test('Form allows custom attribute names when submit is used', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       values={{ test: '' }}
       rules={{ test: 'required' }}
