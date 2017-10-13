@@ -1,13 +1,40 @@
-//Test things dealing with the values prop
 import React from 'react';
-import Form from '../src/form';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import BaseForm from '../src/base';
+//Test things dealing with the values prop
 
-const Input = ({ error, ...props }) =>
-  error ? <p className="error">{error}</p> : <input {...props} />;
+const Input = ({ error, onEnter, ...props }) => (
+  <div>
+    {error ? <p className="error">{error}</p> : null}
+    <input {...props} />
+  </div>
+);
+
+class Form extends React.Component {
+  constructor({ values = {}, errors = {} }) {
+    super();
+    this.state = { values, errors };
+  }
+
+  render() {
+    let { values, errors } = this.state;
+    let { children, ...props } = this.props;
+    return (
+      <BaseForm
+        {...props}
+        values={values}
+        errors={errors}
+        onValues={values => this.setState({ values })}
+        onErrors={errors => this.setState({ errors })}
+      >
+        {children}
+      </BaseForm>
+    );
+  }
+}
 
 test('Form sets value to empty string', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form>
       <Input name="test" />
     </Form>
@@ -17,35 +44,11 @@ test('Form sets value to empty string', () => {
 });
 
 test('Form passes in initial values', () => {
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form values={{ test: 'i love testing!!!' }}>
       <Input name="test" />
     </Form>
   );
 
   expect(wrapper.find(Input).props().value).toEqual('i love testing!!!');
-});
-
-test('Form keeps value if it is set', () => {
-  const wrapper = shallow(
-    <Form values={{ test: 'i love testing!!!' }}>
-      <Input name="test" />
-    </Form>
-  );
-
-  wrapper.setProps({ values: { test: 'changed!' } });
-
-  expect(wrapper.find(Input).props().value).toEqual('i love testing!!!');
-});
-
-test('Form replaces values when initial values changes and not currently set', () => {
-  const wrapper = shallow(
-    <Form>
-      <Input name="test" />
-    </Form>
-  );
-
-  wrapper.setProps({ values: { test: 'changed!' } });
-
-  expect(wrapper.find(Input).props().value).toEqual('changed!');
 });

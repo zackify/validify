@@ -1,7 +1,7 @@
-//Test things dealing with the values prop
 import React from 'react';
 import { mount } from 'enzyme';
 import BaseForm from '../src/base';
+//Test things dealing with the values prop
 
 const Input = ({ error, ...props }) => (
   <div>
@@ -24,14 +24,8 @@ class Form extends React.Component {
         {...props}
         values={values}
         errors={errors}
-        onValues={values => {
-          //console.log(values, 'values');
-          this.setState({ values });
-        }}
-        onErrors={errors => {
-          //console.log(errors, 'wtf');
-          this.setState({ errors });
-        }}
+        onValues={values => this.setState({ values })}
+        onErrors={errors => this.setState({ errors })}
       >
         {children}
       </BaseForm>

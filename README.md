@@ -13,7 +13,7 @@ npm install react-validify
 ```
 
 ```js
-import Form from 'react-validify'
+import { Form } from 'react-validify'
 
 <Form
   rules={{
@@ -49,20 +49,20 @@ Workflow:
 2. Build a wrapper around inputs. It needs to handle when there's an error passed in:
 
 ```js
-export default ({ error, ...props }) => {
-  return (
-    <div>
-      <p>{error}</p>
-      <input {...props} />
-    </div>
-  );
-};
+export default ({ error, ...props }) => (
+  <div>
+    <p>{error}</p>
+    <input {...props} />
+  </div>
+);
 
 ```
 3. Add a submit button inside the form with the `submit` prop.
 4. That's it!
 
 ## Props
+
+If you need access to values and errors, `import { BaseForm} from 'react-validify'`, which lets you pass onValues, onErrors, values, and, errors as props. [See example](/src/form.js)
 
 **rules**
 

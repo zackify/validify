@@ -1,6 +1,6 @@
-//Handles injecting props into the input fields (any component with a name prop)
 import React from 'react';
 import getError from './get-error';
+//Handles injecting props into the input fields (any component with a name prop)
 
 const filters = {
   checkbox: value => value || false,

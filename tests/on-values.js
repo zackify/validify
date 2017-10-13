@@ -1,18 +1,44 @@
-//Test things dealing with onValues prop
 import React from 'react';
-import Form from '../src/form';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
+import BaseForm from '../src/base';
+//Test things dealing with onValues prop
 
-const Input = ({ error, ...props }) =>
-  error
-    ? <p className="error">
-        {error}
-      </p>
-    : <input {...props} />;
+const Input = ({ error, onEnter, ...props }) => (
+  <div>
+    {error ? <p className="error">{error}</p> : null}
+    <input {...props} />
+  </div>
+);
 
-test('Form passes values to onValues', () => {
+class Form extends React.Component {
+  constructor({ values = {}, errors = {} }) {
+    super();
+    this.state = { values, errors };
+  }
+
+  componentWillReceiveProps({ values }) {
+    this.setState({ values });
+  }
+
+  render() {
+    let { values, errors } = this.state;
+    let { children, onValues, ...props } = this.props;
+    return (
+      <BaseForm
+        values={values}
+        errors={errors}
+        onValues={onValues}
+        onErrors={errors => this.setState({ errors })}
+      >
+        {children}
+      </BaseForm>
+    );
+  }
+}
+
+test('Form passes values to onValues', async () => {
   const onValues = jest.fn();
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form rules={{ test: 'required|min:8' }} onValues={onValues}>
       <Input name="test" />
       <button submit className="button" />
@@ -20,7 +46,7 @@ test('Form passes values to onValues', () => {
   );
 
   wrapper
-    .find(Input)
+    .find('input')
     .simulate('change', { target: { name: 'test', value: 'fail' } });
 
   expect(onValues).toHaveBeenCalledTimes(1);
@@ -29,7 +55,7 @@ test('Form passes values to onValues', () => {
 
 test('Form sets values on prop change', () => {
   const onValues = jest.fn();
-  const wrapper = shallow(
+  const wrapper = mount(
     <Form
       rules={{ test: 'required|min:8' }}
       values={{ test: 'false' }}
@@ -56,7 +82,7 @@ test('onValues does not mutate state', () => {
 
     render() {
       return (
-        <Form
+        <BaseForm
           values={this.state.values}
           onValues={values => this.setState({ values })}
         >
@@ -66,13 +92,13 @@ test('onValues does not mutate state', () => {
             className="submit"
             onClick={() => this.setState({ values: { test: '' } })}
           />
-        </Form>
+        </BaseForm>
       );
     }
   }
   const wrapper = mount(<Test />);
   wrapper
-    .find(Input)
+    .find('input')
     .simulate('change', { target: { name: 'test', value: 'Setting' } });
 
   wrapper.find('.submit').simulate('click');

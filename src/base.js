@@ -28,7 +28,6 @@ export default class FormBase extends React.Component {
     if (runner.fails()) {
       return onErrors(runner.errors.errors);
     } else onErrors(undefined);
-
     return onClick(values);
   }
 
@@ -66,7 +65,6 @@ export default class FormBase extends React.Component {
       target.type === 'checkbox' || target.type === 'radio'
         ? target.checked
         : target.value;
-
     onValues({ ...values });
   }
 
