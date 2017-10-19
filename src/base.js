@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from './input';
 import Submit from './submit';
-import Validator from 'validatorjs';
+import validate from './validate';
 import GetChildren from './get-children';
 
 export default class FormBase extends React.Component {
@@ -22,12 +22,16 @@ export default class FormBase extends React.Component {
     } = this.props;
     if (!rules) return onClick(values);
 
-    const runner = new Validator(values, rules, errorMessages);
-    runner.setAttributeNames(attributeNames);
+    const { formErrors } = validate(
+      values,
+      rules,
+      errorMessages,
+      attributeNames
+    );
 
-    if (runner.fails()) {
-      return onErrors(runner.errors.errors);
-    } else onErrors(undefined);
+    if (formErrors) return onErrors(formErrors);
+    else onErrors(undefined);
+
     return onClick(values);
   }
 
@@ -43,29 +47,34 @@ export default class FormBase extends React.Component {
 
     if (!rules || !rules[name]) return;
 
-    const runner = new Validator(
+    const { formErrors } = validate(
       { [name]: value },
       { [name]: rules[name] },
-      errorMessages
+      errorMessages,
+      attributeNames
     );
-    runner.setAttributeNames(attributeNames);
 
-    if (runner.fails() && value && !onChange) {
-      return onErrors({ ...errors, ...runner.errors.errors });
+    if (formErrors && value && !onChange) {
+      return onErrors({ ...errors, ...formErrors });
     }
+
     if (errors[name]) {
       return onErrors({ ...errors, [name]: null });
     }
   }
 
   onChange({ target }) {
-    let { onValues, values } = this.props;
+    let { onValues, onValue, values } = this.props;
 
-    values[target.name] =
+    let value =
       target.type === 'checkbox' || target.type === 'radio'
         ? target.checked
         : target.value;
-    onValues({ ...values });
+
+    values[target.name] = value;
+
+    if (onValues) onValues({ ...values });
+    if (onValue) onValue(target.name, value);
   }
 
   renderChildren(children) {
@@ -92,6 +101,7 @@ export default class FormBase extends React.Component {
       onValues,
       errors,
       onErrors,
+      onValue,
       ...props
     } = this.props;
     return <div {...props}>{this.renderChildren(children)}</div>;
