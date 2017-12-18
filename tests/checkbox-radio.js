@@ -14,18 +14,21 @@ test('Input works with checkbox', () => {
   const wrapper = mount(
     <Form>
       <Input name="Awesome" type="checkbox" />
+      <Input name="Awesome" type="checkbox" />
     </Form>
   );
 
-  wrapper.find('input').simulate('change', {
+  wrapper.find('input').first().simulate('change', {
     target: { name: 'Awesome', checked: true, type: 'checkbox' },
   });
 
-  expect(wrapper.find(Input).props().value).toEqual(true);
+  expect(wrapper.find(Input).first().props().value).toEqual(true);
+  expect(wrapper.find(Input).last().props().value).toEqual(false);
 
-  wrapper.find('input').simulate('change', {
+  wrapper.find('input').first().simulate('change', {
     target: { name: 'Awesome', checked: false, type: 'checkbox' },
   });
 
-  expect(wrapper.find(Input).props().value).toEqual(false);
+  expect(wrapper.find(Input).first().props().value).toEqual(false);
+  expect(wrapper.find(Input).last().props().value).toEqual(false);
 });
