@@ -10,7 +10,7 @@ const Input = ({ error, ...props }) => (
   </div>
 );
 
-test('Input works with checkbox', () => {
+test('Input works with checkbox that has no value', () => {
   const wrapper = mount(
     <Form>
       <Input name="Awesome" type="checkbox" />
@@ -29,3 +29,27 @@ test('Input works with checkbox', () => {
 
   expect(wrapper.find(Input).props().value).toEqual(false);
 });
+
+test('Input works with checkbox that has value', () => {
+  const wrapper = mount(
+    <Form>
+      <Input name="Awesome" type="checkbox" value="impressive" />
+      <Input name="Awesome" type="checkbox" value="incredible" />
+    </Form>
+  );
+
+  wrapper.find('input').first().simulate('change', {
+    target: { name: 'Awesome', checked: true, type: 'checkbox', value: 'impressive' },
+  });
+
+  expect(wrapper.find(Input).first().props().value).toEqual('impressive');
+  // because we arent intelligently managing this group of inputs the values get overwritten
+  expect(wrapper.find(Input).last().props().value).toEqual('impressive');
+
+  wrapper.find('input').first().simulate('change', {
+    target: { name: 'Awesome', checked: false, type: 'checkbox', value: 'impressive' },
+  });
+
+  expect(wrapper.find(Input).first().props().value).toEqual('impressive');
+  expect(wrapper.find(Input).last().props().value).toEqual('impressive');
+})
