@@ -67,7 +67,7 @@ export default class FormBase extends React.Component {
     let { onValues, onValue, values } = this.props;
 
     let value =
-      target.type === 'checkbox' || target.type === 'radio'
+      !target.value && (target.type === 'checkbox' || target.type === 'radio')
         ? target.checked
         : target.value;
 
