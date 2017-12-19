@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "directories": {
@@ -34,6 +34,9 @@
   "homepage": "https://github.com/navjobs/validify#readme",
   "dependencies": {
     "validatorjs": "^3.13.3"
+  },
+  "peerDependencies": {
+    "react": ">=15.0 <= 16"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
