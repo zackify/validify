@@ -92,6 +92,7 @@ export default class FormBase extends React.Component {
   }
 
   render() {
+    let { children } = this.props;
     return <React.Fragment>{this.renderChildren(children)}</React.Fragment>;
   }
 }
