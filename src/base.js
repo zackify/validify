@@ -92,17 +92,6 @@ export default class FormBase extends React.Component {
   }
 
   render() {
-    let {
-      children,
-      rules,
-      errorMessages,
-      attributeNames,
-      values,
-      onValues,
-      errors,
-      onErrors,
-      onValue,
-    } = this.props;
     return <React.Fragment>{this.renderChildren(children)}</React.Fragment>;
   }
 }
