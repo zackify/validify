@@ -1,32 +1,43 @@
 {
   "name": "react-validify",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "directories": {
     "example": "example"
   },
   "jest": {
-    "testMatch": ["<rootDir>/tests/**/*.js"],
+    "testMatch": [
+      "<rootDir>/tests/**/*.js"
+    ],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
-    "moduleFileExtensions": ["js"],
-    "collectCoverageFrom": ["src/form.js"],
-    "setupFiles": ["<rootDir>/polyfill.js", "<rootDir>/test-setup.js"],
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "collectCoverageFrom": [
+      "src/form.js"
+    ],
+    "setupFiles": [
+      "<rootDir>/polyfill.js",
+      "<rootDir>/test-setup.js"
+    ],
     "collectCoverage": false
   },
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "jest",
-    "test-ci":
-      "jest --coverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test-ci": "jest --coverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/navjobs/validify.git"
   },
-  "keywords": ["form", "validation"],
+  "keywords": [
+    "form",
+    "validation"
+  ],
   "author": "Zach Silveira",
   "license": "ISC",
   "bugs": {

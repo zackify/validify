@@ -9,12 +9,12 @@ export default class Form extends React.Component {
 
   render() {
     let { values, errors } = this.state;
-    let { children, ...props } = this.props;
+    let { children,...props } = this.props;
     return (
       <BaseForm
         {...props}
         values={values}
-        errors={errors}
+        errors={this.props.errors || errors}
         onValues={values => this.setState({ values })}
         onErrors={errors => this.setState({ errors })}
       >
