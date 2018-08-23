@@ -60,6 +60,36 @@ export default ({ error, ...props }) => (
 3. Add a submit button inside the form with the `submit` prop.
 4. That's it!
 
+
+### Customizing onChange, onBlur and other behaviors
+
+Validfy will define `onChange`, `onBlur` and other methods on your `input` component to make validation as easy as possible. That being said, if you need to add in your own code to run alongside what `validify` provides, define custom handlers inside your `<Input />` components:
+
+```js
+<InputField
+    type="text"
+    id="title"
+    name="title"
+    placeholder="Title"
+    customOnChange={(event) => console.log('change', event)}
+/>
+
+export const InputField = ({ error, customOnChange, onChange, ...props }) => (
+  <div style={{ width: '100%' }}>
+    <input
+      {...props}
+      onChange={e => {
+        if(customOnChange) customOnChange(e)
+        onChange(e)
+      }}
+    />
+    <Error>{error}</Error>
+  </div>
+);
+```
+
+Make sure you call the original method that you are overriding (e.g. `onChange(e)` or `onBlur(e)`) or else `validify` will not operate properly.
+
 ## Props
 
 If you need access to values and errors, `import { BaseForm} from 'react-validify'`, which lets you pass onValues, onErrors, values, and, errors as props. [See example](/src/form.js)
