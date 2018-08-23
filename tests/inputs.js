@@ -139,3 +139,19 @@ test('Form validates with valid initial values passed and onValues prop passed',
   expect(onValues).toHaveBeenCalledTimes(1);
   expect(onValues.mock.calls[0][0].Awesome).toEqual('hello');
 });
+
+test('Input onChange is triggered when passing onChange as prop', () => {
+  const onChange = jest.fn();
+  const wrapper = mount(
+    <Form rules={{ Awesome: 'required' }}>
+      <Input name="Awesome" onChange={() => onChange()} />
+      <div className="submit" submit />
+    </Form>
+  );
+
+  wrapper
+    .find('input')
+    .simulate('change', { target: { name: 'Awesome', value: 'Hello World' } });
+
+  expect(onChange).toHaveBeenCalledTimes(1)
+})

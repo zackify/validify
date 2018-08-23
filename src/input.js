@@ -18,13 +18,15 @@ const getValue = (type, rawValue) => {
 };
 
 export default (child, values, children, errors, component) => {
-  let { name, onKeyUp, onEnter, type } = child.props;
+  let { name, onKeyUp, onEnter, onChange: _onChange, type } = child.props;
   return React.cloneElement(child, {
     children,
-    onChange: e =>
+    onChange: e => {
+      if (_onChange) { _onChange(e) }
       component.validateOnBlurOrChange(name, e.target.value, () =>
         component.onChange(e)
-      ),
+      )
+    },
     onBlur: e => component.validateOnBlurOrChange(name, e.target.value),
     error: getError(errors, name),
     value: getValue(type, values[name]),
