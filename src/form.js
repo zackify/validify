@@ -7,9 +7,14 @@ export default class Form extends React.Component {
     this.state = { values, errors };
   }
 
+  componentDidUpdate(nextProps) {
+    if (nextProps.values !== this.props.values && nextProps.updateValues)
+      this.setState({ values: nextProps.values });
+  }
+
   render() {
     let { values, errors } = this.state;
-    let { children,...props } = this.props;
+    let { children, ...props } = this.props;
     return (
       <BaseForm
         {...props}

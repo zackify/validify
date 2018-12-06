@@ -1,4 +1,5 @@
 ## React Validify
+
 [![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 [![Coverage Status](https://coveralls.io/repos/github/navjobs/validify/badge.svg?branch=master)](https://coveralls.io/github/navjobs/validify?branch=master)
 
@@ -42,7 +43,6 @@ import { Form } from 'react-validify'
 
 This component is the simplest way to validate form inputs in React. There's two things to learn. The Form accepts a prop called `rules`. This is an object with the names of all yours inputs and the rules for them. Rules can be found [here](https://github.com/skaterdav85/validatorjs#available-rules). Place the `submit` prop on any element that you want to trigger the validation. The onClick will not be triggered until the rules pass. If validation fails, error messages will be passed to the inputs as an error prop.
 
-
 Workflow:
 
 1. Import `Form`
@@ -55,11 +55,10 @@ export default ({ error, ...props }) => (
     <input {...props} />
   </div>
 );
-
 ```
+
 3. Add a submit button inside the form with the `submit` prop.
 4. That's it!
-
 
 ### Customizing onChange, onBlur and other behaviors
 
@@ -67,20 +66,20 @@ Validfy will define `onChange`, `onBlur` and other methods on your `input` compo
 
 ```js
 <InputField
-    type="text"
-    id="title"
-    name="title"
-    placeholder="Title"
-    customOnChange={(event) => console.log('change', event)}
-/>
+  type="text"
+  id="title"
+  name="title"
+  placeholder="Title"
+  customOnChange={event => console.log('change', event)}
+/>;
 
 export const InputField = ({ error, customOnChange, onChange, ...props }) => (
   <div style={{ width: '100%' }}>
     <input
       {...props}
       onChange={e => {
-        if(customOnChange) customOnChange(e)
-        onChange(e)
+        if (customOnChange) customOnChange(e);
+        onChange(e);
       }}
     />
     <Error>{error}</Error>
@@ -101,15 +100,18 @@ You can see a list of rules [here](https://github.com/skaterdav85/validatorjs#av
 **errorMessages**
 
 Custom error messages. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-error-messages)
+
 ```js
 errorMessages={{
   'required.email': 'Custom error message',
   'min.password': 'Custom min password required error message.'
 }}
 ```
+
 **onValues**
 
 exposes the values on change, you must manage the form state by passing in values if using this. Ex: `values={this.state.values}` must be passed too, if using the example below)
+
 ```js
 onValues={values => this.setState({ values })}
 ```
@@ -117,21 +119,25 @@ onValues={values => this.setState({ values })}
 **values**
 
 Set values when the form is first rendered.
+
 ```js
 values={{name: 'set'}}
 ```
+
+pass `updateValues` to make the form update any time you pass in a new values prop.
 
 **onEnter**
 
 Triggers a submit when enter is pressed on an input
 
 ```js
-<Input name="email"  onEnter={this.submit}/>
+<Input name="email" onEnter={this.submit} />
 ```
 
 **attributeNames**
 
 Custom attribute names. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-attribute-names). Currently does not support validatorjs's `attributeFormatter`.
+
 ```js
 attributeNames={{
   email: 'Email address'
@@ -151,8 +157,11 @@ errors={{name: 'Email is invalid...'}}
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 | [<img src="https://avatars0.githubusercontent.com/u/449136?v=4" width="100px;"/><br /><sub>Zach Silveira</sub>](https://zach.codes)<br /> | [<img src="https://avatars1.githubusercontent.com/u/2430381?v=4" width="100px;"/><br /><sub>Ryan Castner</sub>](http://audiolion.github.io)<br /> |
-| :---: | :---: |
+| :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------: |
+
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
