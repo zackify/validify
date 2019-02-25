@@ -38,7 +38,7 @@ Add `useField` to your own inputs inside the Form wrapper:
 
 ```js
 import React from 'react';
-import { useField } from './form/hook';
+import { useField } from 'react-validify';
 
 export default props => {
   let { handleChange, handleBlur, value, errors } = useField(props.name);
