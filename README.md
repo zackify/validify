@@ -11,7 +11,7 @@ npm install react-validify@5.0.0-beta
 
 ## V5 Hooks
 
-```
+```js
 import Input from './input';
 import { Form } from 'react-validify';
 
@@ -36,7 +36,7 @@ const App = () => {
 
 Add `useField` to your own inputs inside the Form wrapper:
 
-```
+```js
 import React from 'react';
 import { useField } from './form/hook';
 
