@@ -11,6 +11,11 @@ npm install react-validify@5.0.0-beta
 
 ## V5 Hooks
 
+Todo:
+- Move errors into internal state, dont expose it on the outside api (setFields)
+- only pass back the user the values, not the other stuff, ex: errors ^
+- Add option to useField that will validate other fields when one is validated, ex validate date_2 field when date_1 is validating
+
 Messing around with a new syntax that keeps it easy to wrap your own inputs. This api lets you trigger a blur event when needed, which will trigger initial validation. If there are errors from that, typing onChange will validate until there are no longer errors. Still need to support a few more cases and add tests
 
 ```js
