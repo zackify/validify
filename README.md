@@ -11,6 +11,8 @@ npm install react-validify@5.0.0-beta
 
 ## V5 Hooks
 
+Messing around with a new syntax that keeps it easy to wrap your own inputs. This api lets you trigger a blur event when needed, which will trigger initial validation. If there are errors from that, typing onChange will validate until there are no longer errors. Still need to support a few more cases and add tests
+
 ```js
 import Input from './input';
 import { Form } from 'react-validify';
