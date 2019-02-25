@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Input from './input';
-import Form from 'react-validify';
+import { Form } from 'react-validify';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Form rules={{ email: 'email|required', password: 'required|min:8' }}>
-          <Input name="email" />
-          <Input name="password" type="password" />
-          <div>
-            <div
-              submit
-              onClick={values => console.log('if validation passes, this logs')}
-            >
-              Submit!
-            </div>
-          </div>
-        </Form>
-      </div>
-    );
-  }
-}
+const App = () => {
+  let [fields, setFields] = React.useState({});
+  // console.log(fields, 'herere');
+  return (
+    <Form
+      fields={fields}
+      setFields={setFields}
+      rules={{
+        email: 'email|required',
+        password: 'required|min:8',
+      }}
+    >
+      <Input name="email" />
+      <Input name="name" />
+    </Form>
+  );
+};
 
 export default App;
