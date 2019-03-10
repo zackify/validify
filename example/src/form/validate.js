@@ -1,11 +1,25 @@
-import Validator from 'validatorjs';
+export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
+  let newErrors = Object.keys(rules)
+    .filter(rule => {
+      if (errors.filter(error => error.name === rule).length) return true;
+      if (valuesBlurred) return valuesBlurred[rule];
 
-export default (name, value, rules) => {
-  if (!rules[name]) return null;
+      return true;
+    })
+    .map(field =>
+      rules[field].map(rule => {
+        let error = rule(values[field], values);
 
-  const runner = new Validator({ [name]: value }, { [name]: rules[name] });
+        if (!error) return false;
 
-  if (runner.fails()) return runner.errors.errors[name];
+        return {
+          name: field,
+          message: error,
+        };
+      }),
+    )
+    .flatMap(x => x)
+    .filter(Boolean);
 
-  return null;
+  setErrors(newErrors);
 };

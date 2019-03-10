@@ -1,4 +1,6 @@
 import Form from './form';
-import useField from './hook';
+import rules from './rules';
+import useField from './use-field';
+import useSubmit from './use-submit';
 
-export { Form, useField };
+export { Form, useField, useSubmit, rules };

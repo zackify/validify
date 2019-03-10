@@ -3,10 +3,12 @@
 [![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 [![Coverage Status](https://coveralls.io/repos/github/navjobs/validify/badge.svg?branch=master)](https://coveralls.io/github/navjobs/validify?branch=master)
 
+No dependencies, simplest way to validate and manage form state with hooks!
+
 ## Install
 
 ```
-npm install react-validify@5.0.0-beta
+npm install react-validify@5.0.0-beta3
 ```
 
 ## V5 Hooks
@@ -20,22 +22,29 @@ Messing around with a new syntax that keeps it easy to wrap your own inputs. Thi
 
 ```js
 import Input from './input';
-import { Form } from 'react-validify';
+import Submit from './submit';
+import { Form, rules } from 'react-validify';
+
+const { required, email } = rules
 
 const App = () => {
-  let [fields, setFields] = React.useState({});
+  let [values, setValues] = React.useState({ email: 'test' });
   // console.log(fields, 'herere');
   return (
     <Form
-      fields={fields}
-      setFields={setFields}
+      values={values}
+      onValues={setValues}
       rules={{
-        email: 'email|required',
-        password: 'required|min:8',
+        email: [required, email],
+        date1: [greaterThanDate2],
+        name: [required],
       }}
     >
       <Input name="email" />
       <Input name="name" />
+      <Input name="date1" />
+      <Input name="date2" />
+      <Submit />
     </Form>
   );
 };
@@ -64,6 +73,41 @@ export default props => {
 };
 
 ```
+
+Add `useSubmit` to trigger submitting or validating
+
+```js
+import React from 'react';
+import { useSubmit } from 'react-validify';
+
+const Submit = props => {
+  let { canSubmit, values, validateAll } = useSubmit();
+
+  return (
+    <div
+      onClick={() => {
+        if (canSubmit) return console.log('submit!', values);
+        validateAll();
+      }}
+      style={{ opacity: canSubmit ? 1 : 0.5 }}
+    >
+      Submit Form
+    </div>
+  );
+};
+export default Submit;
+```
+
+Create rules, super quick:
+
+```js
+const testRule = (value, values) =>
+  value.length > values.date2.length ? "Date can't be longer" : null;
+```
+
+Rules get a `value` and `values` arguments. This means you can validate an input, or validate it against other form values.
+
+Rules are guaranteed to run on a field after the first time the field is blurred, and then any time an error is present, they will run onChange.
 
 ## Contributors
 

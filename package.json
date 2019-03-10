@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "5.0.0-beta",
+  "version": "5.0.0-beta3",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "directories": {
@@ -44,9 +44,7 @@
     "url": "https://github.com/navjobs/validify/issues"
   },
   "homepage": "https://github.com/navjobs/validify#readme",
-  "dependencies": {
-    "validatorjs": "^3.15.1"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": ">=16.8"
   },

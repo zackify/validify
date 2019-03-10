@@ -1,7 +1,7 @@
 import React from 'react';
-import useField from './form/hook';
+import useField from './form/use-field';
 
-export default props => {
+const Input = props => {
   let { handleChange, handleBlur, value, errors } = useField(props.name);
 
   return (
@@ -9,10 +9,11 @@ export default props => {
       {errors ? <p>{errors[0]}</p> : null}
       <input
         {...props}
-        value={value}
+        value={value || ''}
         onBlur={handleBlur}
         onChange={event => handleChange(event.target.value)}
       />
     </div>
   );
 };
+export default Input;
