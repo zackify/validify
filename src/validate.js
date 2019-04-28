@@ -18,7 +18,7 @@ export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
         };
       }),
     )
-    .flatMap(x => x)
+    .reduce((acc, row) => [...acc, ...row], [])
     .filter(Boolean);
 
   setErrors(newErrors);
