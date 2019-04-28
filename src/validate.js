@@ -22,4 +22,5 @@ export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
     .filter(Boolean);
 
   setErrors(newErrors);
+  return newErrors;
 };

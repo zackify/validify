@@ -3,9 +3,7 @@ import validate from './validate';
 import { FormContext } from './context';
 
 const useSubmit = () => {
-  const { rules, values, errors, setErrors, valuesBlurred } = React.useContext(
-    FormContext,
-  );
+  const { rules, values, errors, setErrors } = React.useContext(FormContext);
 
   const validateAll = () => {
     validate({
@@ -15,10 +13,19 @@ const useSubmit = () => {
     });
   };
 
+  const handleSubmit = callback => {
+    let errors = validate({
+      values,
+      rules,
+      setErrors,
+    });
+    if (!errors.length) callback(values);
+  };
+
   return {
     values,
-    validateAll,
-    canSubmit: !errors.length && Object.keys(valuesBlurred).length,
+    handleSubmit,
+    canSubmit: !errors.length,
   };
 };
 
