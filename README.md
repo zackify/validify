@@ -3,154 +3,105 @@
 [![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 [![Coverage Status](https://coveralls.io/repos/github/navjobs/validify/badge.svg?branch=master)](https://coveralls.io/github/navjobs/validify?branch=master)
 
-## Why
-
-Validating form inputs in React is one of two things. A manual process that you build into every app, or something you get from pulling in a huge library. This package aims to provide form validation with the smallest amount of code change to your apps! Make a small field wrapper that receives input props and handles error messages, set some rules, and that's it!
+No dependencies, simplest way to validate and manage form state with hooks!
 
 ## Install
 
 ```
-npm install react-validify
+npm install react-validify@5.0.0-beta3
 ```
 
-```js
-import { Form } from 'react-validify'
+## V5 Hooks
 
-<Form
-  rules={{
-    email: 'email|required',
-    password: 'required|min:8'
-  }}
->
-  <Input name="email" />
-  <Input name="password" type="password" />
-
-  <div
-    submit
-    onClick={values =>
-      console.log(
-        'this will be called if validation passes',
-        values
-      )
-    }
-  >
-    Submit!
-  </div>
-</Form>
-```
-
-## Usage
-
-This component is the simplest way to validate form inputs in React. There's two things to learn. The Form accepts a prop called `rules`. This is an object with the names of all yours inputs and the rules for them. Rules can be found [here](https://github.com/skaterdav85/validatorjs#available-rules). Place the `submit` prop on any element that you want to trigger the validation. The onClick will not be triggered until the rules pass. If validation fails, error messages will be passed to the inputs as an error prop.
-
-Workflow:
-
-1. Import `Form`
-2. Build a wrapper around inputs. It needs to handle when there's an error passed in:
+Messing around with a new syntax that keeps it easy to wrap your own inputs. This api lets you trigger a blur event when needed, which will trigger initial validation. If there are errors from that, typing onChange will validate until there are no longer errors. Still need to support a few more cases and add tests
 
 ```js
-export default ({ error, ...props }) => (
-  <div>
-    <p>{error}</p>
-    <input {...props} />
-  </div>
-);
-```
+import Input from './input';
+import Submit from './submit';
+import { Form, rules } from 'react-validify';
 
-3. Add a submit button inside the form with the `submit` prop.
-4. That's it!
+const { required, email } = rules;
 
-### Customizing onChange, onBlur and other behaviors
-
-Validfy will define `onChange`, `onBlur` and other methods on your `input` component to make validation as easy as possible. That being said, if you need to add in your own code to run alongside what `validify` provides, define custom handlers inside your `<Input />` components:
-
-```js
-<InputField
-  type="text"
-  id="title"
-  name="title"
-  placeholder="Title"
-  customOnChange={event => console.log('change', event)}
-/>;
-
-export const InputField = ({ error, customOnChange, onChange, ...props }) => (
-  <div style={{ width: '100%' }}>
-    <input
-      {...props}
-      onChange={e => {
-        if (customOnChange) customOnChange(e);
-        onChange(e);
+const App = () => {
+  let [values, setValues] = React.useState({ email: 'test' });
+  // console.log(fields, 'herere');
+  return (
+    <Form
+      values={values}
+      onValues={setValues}
+      rules={{
+        email: [required, email],
+        date1: [greaterThanDate2],
+        name: [required],
       }}
-    />
-    <Error>{error}</Error>
-  </div>
-);
+    >
+      <Input name="email" />
+      <Input name="name" />
+      <Input name="date1" />
+      <Input name="date2" />
+      <Submit />
+    </Form>
+  );
+};
 ```
 
-Make sure you call the original method that you are overriding (e.g. `onChange(e)` or `onBlur(e)`) or else `validify` will not operate properly.
-
-## Props
-
-If you need access to values and errors, `import { BaseForm} from 'react-validify'`, which lets you pass onValues, onErrors, values, and, errors as props. [See example](/src/form.js)
-
-**rules**
-
-You can see a list of rules [here](https://github.com/skaterdav85/validatorjs#available-rules)
-
-**errorMessages**
-
-Custom error messages. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-error-messages)
+Add `useField` to your own inputs inside the Form wrapper:
 
 ```js
-errorMessages={{
-  'required.email': 'Custom error message',
-  'min.password': 'Custom min password required error message.'
-}}
+import React from 'react';
+import { useField } from 'react-validify';
+
+export default props => {
+  let { handleChange, handleBlur, value, errors } = useField(props.name);
+
+  return (
+    <div>
+      {errors ? <p>{errors[0]}</p> : null}
+      <input
+        {...props}
+        value={value}
+        onBlur={handleBlur}
+        onChange={event => handleChange(event.target.value)}
+      />
+    </div>
+  );
+};
 ```
 
-**onValues**
-
-exposes the values on change, you must manage the form state by passing in values if using this. Ex: `values={this.state.values}` must be passed too, if using the example below)
+Add `useSubmit` to trigger submitting or validating
 
 ```js
-onValues={values => this.setState({ values })}
+import React from 'react';
+import { useSubmit } from 'react-validify';
+
+const Submit = props => {
+  let { canSubmit, values, validateAll } = useSubmit();
+
+  return (
+    <div
+      onClick={() => {
+        if (canSubmit) return console.log('submit!', values);
+        validateAll();
+      }}
+      style={{ opacity: canSubmit ? 1 : 0.5 }}
+    >
+      Submit Form
+    </div>
+  );
+};
+export default Submit;
 ```
 
-**values**
-
-Set values when the form is first rendered.
+Create rules, super quick:
 
 ```js
-values={{name: 'set'}}
+const testRule = (value, values) =>
+  value.length > values.date2.length ? "Date can't be longer" : null;
 ```
 
-pass `updateValues` to make the form update any time you pass in a new values prop.
+Rules get a `value` and `values` arguments. This means you can validate an input, or validate it against other form values.
 
-**onEnter**
-
-Triggers a submit when enter is pressed on an input
-
-```js
-<Input name="email" onEnter={this.submit} />
-```
-
-**attributeNames**
-
-Custom attribute names. You can see how these work [here](https://github.com/skaterdav85/validatorjs#custom-attribute-names). Currently does not support validatorjs's `attributeFormatter`.
-
-```js
-attributeNames={{
-  email: 'Email address'
-}}
-```
-
-**errors**
-
-Set errors manually, in case the server comes back with messages.
-
-```js
-errors={{name: 'Email is invalid...'}}
-```
+Rules are guaranteed to run on a field after the first time the field is blurred, and then any time an error is present, they will run onChange.
 
 ## Contributors
 
