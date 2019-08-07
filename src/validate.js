@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
   let newErrors = Object.keys(rules)
     .filter(rule => {
@@ -8,7 +10,7 @@ export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
     })
     .map(field =>
       rules[field].map(rule => {
-        let error = rule(values[field], values);
+        let error = rule(get(values, field), values);
 
         if (!error) return false;
 

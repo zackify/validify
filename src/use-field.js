@@ -1,4 +1,5 @@
 import React from 'react';
+import get from 'lodash/get';
 import validate from './validate';
 import { FormContext } from './context';
 
@@ -20,7 +21,7 @@ const useField = name => {
     valuesBlurred,
   } = React.useContext(FormContext);
 
-  let value = values[name];
+  let value = get(values, name);
   // Pulling out just this field's errors
   let fieldErrors = errors
     .filter(error => error.name === name)
@@ -47,12 +48,16 @@ const useField = name => {
       fieldErrors.length ||
       valuesBlurred[name] ||
       hasDependentRule(name, rules)
-    )
+    ) {
+      let newValues = { ...values };
+      set(newValues, name, value);
+
       validate({
         ...validationProps,
-        values: { ...values, [name]: value },
+        values: newValues,
         valuesBlurred: { ...valuesBlurred, [name]: true },
       });
+    }
 
     updateValue(name, value);
   };

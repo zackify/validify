@@ -1,3 +1,4 @@
+import set from 'lodash/set'
 import React, { useState } from 'react';
 import { FormContextProvider } from './context';
 
@@ -13,10 +14,9 @@ const Form = ({ children, rules, values, onValues }) => {
       setErrors={setErrors}
       errors={errors}
       updateValue={(name, value) => {
-        onValues({
-          ...values,
-          [name]: value,
-        });
+        let newValues = { ...values };
+        set(newValues, name, value);
+        onValues(newValues);
       }}
       hasBlurred={name => {
         if (valuesBlurred[name]) return;

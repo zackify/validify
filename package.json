@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "5.2.0",
+  "version": "5.3.0-beta",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "directories": {
@@ -46,7 +46,8 @@
   "homepage": "https://github.com/navjobs/validify#readme",
   "dependencies": {},
   "peerDependencies": {
-    "react": ">=16.8"
+    "react": ">=16.8",
+    "loadash": ">=4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -58,6 +59,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.6.1",
     "jest": "^24.1.0",
+    "lodash": "^4.17.15",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-test-renderer": "^16.8.3"
