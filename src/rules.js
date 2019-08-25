@@ -5,4 +5,4 @@ export const email = value => {
 };
 
 export const required = value =>
-  !value || !value.length ? 'This field is required' : null;
+  !value || !value.toString().length ? 'This field is required' : null;
