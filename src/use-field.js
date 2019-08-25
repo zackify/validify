@@ -1,5 +1,6 @@
 import React from 'react';
 import get from 'lodash/get';
+import set from 'lodash/set';
 import validate from './validate';
 import { FormContext } from './context';
 
