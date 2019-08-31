@@ -37,7 +37,7 @@ const useField = name => {
     errors,
   };
 
-  const handleChange = value => {
+  const handleChange = (value, field) => {
     /*
       If this field 
       - has errors
@@ -60,7 +60,7 @@ const useField = name => {
       });
     }
 
-    updateValue(name, value);
+    updateValue(name || field, value);
   };
 
   /*
@@ -79,6 +79,7 @@ const useField = name => {
     handleBlur,
     handleChange,
     value,
+    values,
     errors: fieldErrors.length ? fieldErrors : null,
   };
 };
