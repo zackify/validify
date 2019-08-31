@@ -47,20 +47,20 @@ const useField = name => {
     */
     if (
       fieldErrors.length ||
-      valuesBlurred[name] ||
-      hasDependentRule(name, rules)
+      valuesBlurred[field || name] ||
+      hasDependentRule(field || name, rules)
     ) {
       let newValues = { ...values };
-      set(newValues, name, value);
+      set(newValues, field || name, value);
 
       validate({
         ...validationProps,
         values: newValues,
-        valuesBlurred: { ...valuesBlurred, [name]: true },
+        valuesBlurred: { ...valuesBlurred, [field || name]: true },
       });
     }
 
-    updateValue(name || field, value);
+    updateValue(field || name, value);
   };
 
   /*
