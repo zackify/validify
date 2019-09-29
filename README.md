@@ -8,7 +8,7 @@ No dependencies, simplest way to validate and manage form state with hooks!
 ## Install
 
 ```
-npm install react-validify@5.2.0
+npm install react-validify
 ```
 
 ## V5 Hooks
