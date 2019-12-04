@@ -3,7 +3,7 @@
 [![CircleCI](https://circleci.com/gh/navjobs/validify.svg?style=svg)](https://circleci.com/gh/navjobs/validify)
 [![Coverage Status](https://coveralls.io/repos/github/navjobs/validify/badge.svg?branch=master)](https://coveralls.io/github/navjobs/validify?branch=master)
 
-No dependencies, simplest way to validate and manage form state with hooks!
+single dependency, simplest way to validate and manage form state with hooks!
 
 ## Install
 
@@ -23,7 +23,7 @@ import { Form, rules } from 'react-validify';
 const { required, email } = rules;
 
 const App = () => {
-  let [values, setValues] = React.useState({ email: 'test' });
+  let [values, setValues] = React.useState({ email: 'test', nested: { test: 'this is nested' } });
   // console.log(fields, 'herere');
   return (
     <Form
@@ -39,6 +39,7 @@ const App = () => {
       <Input name="name" />
       <Input name="date1" />
       <Input name="date2" />
+      <Input name="nested.test" />
       <Submit />
     </Form>
   );
