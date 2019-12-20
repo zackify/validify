@@ -26,7 +26,7 @@
     "collectCoverage": false
   },
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel --extensions \".ts,.tsx,.js\" src --out-dir dist",
     "test": "jest",
     "test-ci": "jest --coverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
@@ -52,6 +52,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.7",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15",

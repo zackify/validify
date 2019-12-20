@@ -5,7 +5,7 @@ import validate from './validate';
 import { FormContext } from './context';
 
 //Checks if another field has a rule depending on this field
-const hasDependentRule = (name, rules) => {
+const hasDependentRule = (name: string, rules) => {
   return Object.values(rules)
     .reduce((acc, row) => [...acc, ...row], [])
     .find(rule => rule.needs && rule.needs.includes(name));
