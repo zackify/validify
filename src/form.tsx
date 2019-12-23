@@ -31,7 +31,7 @@ export type FormProps = {
   rules: Rules;
   values: Values;
   children: ReactNode;
-  onValues: (values: Values) => any;
+  onValues: Dispatch<SetStateAction<any>>;
 };
 
 const Form = ({ children, onValues, values, rules }: FormProps) => {

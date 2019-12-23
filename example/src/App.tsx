@@ -2,10 +2,10 @@ import React from 'react';
 
 import Input from './input';
 import Submit from './submit';
-import Form from './form/form';
-import { required, email } from './form/rules';
+import { required, email, RuleFn } from 'react-validify/dist/rules';
+import { Form } from 'react-validify';
 
-const greaterThanDate2 = (value, values) => {
+const greaterThanDate2: RuleFn = (value, values) => {
   if (!values.date2) return false;
 
   if (value.length < values.date2.length)

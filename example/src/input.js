@@ -1,5 +1,5 @@
 import React from 'react';
-import useField from './form/use-field';
+import { useField } from 'react-validify';
 
 const Input = props => {
   let { handleChange, handleBlur, value, errors } = useField(props.name);
@@ -11,7 +11,7 @@ const Input = props => {
         {...props}
         value={value || ''}
         onBlur={handleBlur}
-        placeholder={name}
+        placeholder={props.name}
         onChange={event => handleChange(event.target.value)}
       />
     </div>
