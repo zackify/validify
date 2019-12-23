@@ -1,5 +1,5 @@
 import React from 'react';
-import useSubmit from '../src/use-submit';
+import useSubmit from '../../src/use-submit';
 
 const Submit = props => {
   let { canSubmit, values, validateAll } = useSubmit();

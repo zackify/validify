@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form } from '../src/form';
+import { Form } from '../../src/form';
 import { useState } from 'react';
-import { required, email } from '../src/rules';
+import { required, email } from '../../src/rules';
 import Input from './input';
 import Submit from './submit';
 

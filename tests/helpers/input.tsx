@@ -1,5 +1,5 @@
 import React from 'react';
-import useField from '../src/use-field';
+import useField from '../../src/use-field';
 
 const Input = props => {
   let { handleChange, handleBlur, value, errors } = useField(props.name);
