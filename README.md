@@ -4,7 +4,7 @@ single dependency, simplest way to validate and manage form state with hooks!
 
 ## Coming Soon
 
-- Full test coverage with testing-libraru
+- Full test coverage with testing-library
 - TS types for all the code
 
 ## Install
