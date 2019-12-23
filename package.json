@@ -8,20 +8,21 @@
   },
   "jest": {
     "testMatch": [
-      "<rootDir>/tests/**/*.js"
+      "<rootDir>/tests/**/*.test.js"
     ],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
     "moduleFileExtensions": [
-      "js"
+      "js",
+      "ts",
+      "tsx"
     ],
     "collectCoverageFrom": [
       "src/form.js"
     ],
-    "setupFiles": [
-      "<rootDir>/polyfill.js",
-      "<rootDir>/test-setup.js"
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
     ],
     "collectCoverage": false
   },
@@ -51,8 +52,12 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.7",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "lodash": "^4.17.15",

@@ -11,9 +11,9 @@ single dependency, simplest way to validate and manage form state with hooks!
 npm install react-validify
 ```
 
-## V5 Hooks
+## Getting Started
 
-Messing around with a new syntax that keeps it easy to wrap your own inputs. This api lets you trigger a blur event when needed, which will trigger initial validation. If there are errors from that, typing onChange will validate until there are no longer errors. Still need to support a few more cases and add tests
+This api has been carefully thought out over the past year. It's been in use on multiple React websites and React Native mobile applications. Using the library is simple. Include the `Form` component, and wrap your `input`'s and `submit` buttons.
 
 ```js
 import Input from './input';
@@ -23,7 +23,10 @@ import { Form, rules } from 'react-validify';
 const { required, email } = rules;
 
 const App = () => {
-  let [values, setValues] = React.useState({ email: 'test', nested: { test: 'this is nested' } });
+  let [values, setValues] = React.useState({
+    email: 'test',
+    nested: { test: 'this is nested' },
+  });
   // console.log(fields, 'herere');
   return (
     <Form
