@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, wait } from '@testing-library/react';
-import { TestForm } from './Form';
+import { TestForm } from './form';
 
 test('Checks dependent rule', async () => {
   let errorMessage = 'Must be longer value than date 2 field';
