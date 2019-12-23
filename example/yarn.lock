@@ -8443,10 +8443,10 @@ react-scripts@3.3.0:
   optionalDependencies:
     fsevents "2.1.2"
 
-react-validify@5.5.0-beta3:
-  version "5.5.0-beta3"
-  resolved "https://registry.yarnpkg.com/react-validify/-/react-validify-5.5.0-beta3.tgz#1a418f3a2950710a5e8a3ec2bad8b50efbed1f97"
-  integrity sha512-p4jYLKpOHQS2nnDAbPbnoc9tNvUFvYNm3GVWZqS4NoAaRXDb2jJB1952UXoPwFmj6paAalrtofDqzHspFkVuUA==
+react-validify@5.5.0-beta4:
+  version "5.5.0-beta4"
+  resolved "https://registry.yarnpkg.com/react-validify/-/react-validify-5.5.0-beta4.tgz#3e425397a2b7e21f9bbeb69bc50ecc248e2e040b"
+  integrity sha512-go1QAU7igZ9VlFktPybFJFvLV8Ir3H9qIdo2HY1Te7HmMEvgicqJfiMH3QVkS9Sw/9+jy3jdTCi3JemtLbTl+Q==
 
 react@^16.12.0:
   version "16.12.0"
