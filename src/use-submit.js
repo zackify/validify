@@ -1,6 +1,6 @@
 import React from 'react';
 import validate from './validate';
-import { FormContext } from './context';
+import { FormContext } from './form';
 
 const useSubmit = () => {
   const { rules, values, errors, setErrors } = React.useContext(FormContext);

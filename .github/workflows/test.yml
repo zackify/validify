@@ -21,5 +21,6 @@ jobs:
           yarn --frozen-lockfile
           yarn build
           yarn test
+          yarn check-types
         env:
           CI: true

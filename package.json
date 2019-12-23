@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "5.4.4",
+  "version": "5.5.0-beta",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "directories": {
@@ -28,7 +28,9 @@
   },
   "scripts": {
     "build": "NODE_ENV=production babel --extensions \".ts,.tsx,.js\" src --out-dir dist",
-    "test": "jest"
+    "test": "jest",
+    "check-types": "tsc --noEmit",
+    "export-types": "tsc --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
@@ -62,6 +64,7 @@
     "lodash": "^4.17.15",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-test-renderer": "^16.12.0"
+    "react-test-renderer": "^16.12.0",
+    "typescript": "^3.7.4"
   }
 }

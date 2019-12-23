@@ -2,10 +2,10 @@ import React from 'react';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import validate from './validate';
-import { FormContext } from './context';
+import { FormContext } from './form';
 
 //Checks if another field has a rule depending on this field
-const hasDependentRule = (name: string, rules) => {
+const hasDependentRule = (name, rules) => {
   return Object.values(rules)
     .reduce((acc, row) => [...acc, ...row], [])
     .find(rule => rule.needs && rule.needs.includes(name));
