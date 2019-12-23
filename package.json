@@ -27,9 +27,8 @@
     "collectCoverage": false
   },
   "scripts": {
-    "build": "babel --extensions \".ts,.tsx,.js\" src --out-dir dist",
-    "test": "jest",
-    "test-ci": "jest --coverage --no-cache && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "build": "NODE_ENV=production babel --extensions \".ts,.tsx,.js\" src --out-dir dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
