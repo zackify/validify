@@ -22,3 +22,77 @@ test('Checks dependent rule', async () => {
   // confirm the error message is displayed
   expect(getByText(errorMessage)).toBeInTheDocument();
 });
+
+test('Validation runs after blur', async () => {
+  let { queryByPlaceholderText, queryByText } = render(<TestForm />);
+
+  //blur the field
+  const name = queryByPlaceholderText('name');
+  fireEvent.blur(name);
+
+  //ensure the validation shows up
+  expect(queryByText('This field is required')).toBeInTheDocument();
+});
+
+test('Validation runs on change after initial blur', async () => {
+  let { queryByPlaceholderText, queryByText } = render(<TestForm />);
+
+  const name = queryByPlaceholderText('name');
+
+  // blur out of the field
+  fireEvent.blur(name);
+  //blur twice, make sure nothing happens since we only care about the first time
+  fireEvent.blur(name);
+
+  // make sure the validation error shows up
+  expect(queryByText('This field is required')).toBeInTheDocument();
+
+  //fill in the field with anything
+  fireEvent.change(name, { target: { value: 'filled' } });
+
+  //ensure the validation goes away
+  expect(queryByText('This field is required')).toBeNull();
+});
+
+test('Validation runs after submit', async () => {
+  let { queryByText } = render(<TestForm />);
+  const submit = queryByText('Submit Form');
+
+  //ensure the validation isn't showing
+  expect(queryByText('This field is required')).toBeNull();
+
+  //press the submit button
+  submit.click();
+
+  //see if the validation is now showing for fields
+  expect(queryByText('This field is required')).toBeInTheDocument();
+  expect(queryByText('Email address is invalid')).toBeInTheDocument();
+});
+
+test('Submit calls onSubmit if validation passes', async () => {
+  const spy = jest.fn();
+  let { queryByPlaceholderText, queryByText } = render(
+    <TestForm onSubmit={spy} />,
+  );
+  const submit = queryByText('Submit Form');
+
+  //press the submit button
+  submit.click();
+
+  //ensure onSubmit wasn't called, because validation failed
+  expect(spy.mock.calls.length).toEqual(0);
+
+  //fill in required fields, so validation will pass
+  fireEvent.change(queryByPlaceholderText('name'), {
+    target: { value: 'test' },
+  });
+  fireEvent.change(queryByPlaceholderText('email'), {
+    target: { value: 'test@test.com' },
+  });
+
+  //press the submit button with passing validation
+  submit.click();
+
+  //ensure onSubmit was called this time
+  expect(spy.mock.calls.length).toEqual(1);
+});

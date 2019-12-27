@@ -12,7 +12,11 @@ const greaterThanDate2 = (value, values) => {
     return 'Must be longer value than date 2 field';
 };
 
-export const TestForm = () => {
+type Props = {
+  onSubmit?: (values: any) => any;
+};
+
+export const TestForm = ({ onSubmit }: Props) => {
   let [values, setValues] = useState({ email: 'test' });
   //console.log(values, 'herere');
   return (
@@ -29,7 +33,7 @@ export const TestForm = () => {
       <Input name="name" />
       <Input name="date1" />
       <Input name="date2" />
-      <Submit />
+      <Submit onSubmit={onSubmit} />
     </Form>
   );
 };

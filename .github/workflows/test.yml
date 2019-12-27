@@ -20,7 +20,7 @@ jobs:
         run: |
           yarn --frozen-lockfile
           yarn build
-          yarn test
+          yarn test --coverage
           yarn check-types
         env:
           CI: true
