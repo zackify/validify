@@ -97,7 +97,7 @@ const Submit = props => {
 };
 export default Submit;
 ```
-The callback passed to `handleSubmit` will only be triggered uf validation is passing.
+The callback passed to `handleSubmit` will only be triggered if validation is passing.
 
 Create rules:
 
