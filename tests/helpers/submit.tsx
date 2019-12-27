@@ -1,14 +1,20 @@
 import React from 'react';
 import useSubmit from '../../src/use-submit';
 
-const Submit = props => {
-  let { canSubmit, values, validateAll } = useSubmit();
+type Props = {
+  onSubmit?: (values: any) => any;
+};
+
+const Submit = ({ onSubmit }: Props) => {
+  let { canSubmit, handleSubmit } = useSubmit();
 
   return (
     <div
+      id="submit"
       onClick={() => {
-        if (canSubmit) return console.log('submit!', values);
-        validateAll();
+        if (canSubmit) {
+          handleSubmit(onSubmit);
+        }
       }}
       style={{ opacity: canSubmit ? 1 : 0.5 }}
     >
