@@ -19,7 +19,7 @@
       "tsx"
     ],
     "collectCoverageFrom": [
-      "src/form.js"
+      "src/**"
     ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"

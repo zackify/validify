@@ -4,13 +4,6 @@ import set from 'lodash/set';
 import validate from './validate';
 import { FormContext } from './form';
 
-//Checks if another field has a rule depending on this field
-const hasDependentRule = (name, rules) => {
-  return Object.values(rules)
-    .reduce((acc, row) => [...acc, ...row], [])
-    .find(rule => rule.needs && rule.needs.includes(name));
-};
-
 const useField = name => {
   const {
     errors,
@@ -45,11 +38,7 @@ const useField = name => {
       - has dependant rules
       check validation on change
     */
-    if (
-      fieldErrors.length ||
-      valuesBlurred[field || name] ||
-      hasDependentRule(field || name, rules)
-    ) {
+    if (fieldErrors.length || valuesBlurred[field || name]) {
       let newValues = { ...values };
       set(newValues, field || name, value);
 

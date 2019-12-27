@@ -41,6 +41,8 @@ test('Validation runs on change after initial blur', async () => {
 
   // blur out of the field
   fireEvent.blur(name);
+  //blur twice, make sure nothing happens since we only care about the first time
+  fireEvent.blur(name);
 
   // make sure the validation error shows up
   expect(queryByText('This field is required')).toBeInTheDocument();
