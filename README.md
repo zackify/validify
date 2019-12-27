@@ -47,20 +47,20 @@ const App = () => {
 ```
 
 Add `useField` to your own inputs inside the Form wrapper. This allows you to use the library with any type of input field.
-It just needs to support a `handleChange` `handleBlur` and `value` prop. This is the `Input` component you see in the first example.
+It just needs to support a `handleChange` `handleBlur` and `value` prop. This is the `Input` component you see in the first example. Don't forget to pass the field `name` to the hook.
 
 ```js
 import React from 'react';
 import { useField } from 'react-validify';
 
-const Input = props => {
-  let { handleChange, handleBlur, value, errors } = useField(props.name);
+const Input = ({ name }) => {
+  let { handleChange, handleBlur, value, errors } = useField(name);
 
   return (
     <div>
       {errors ? <p>{errors[0]}</p> : null}
       <input
-        {...props}
+        name={name}
         value={value}
         onBlur={handleBlur}
         onChange={event => handleChange(event.target.value)}
