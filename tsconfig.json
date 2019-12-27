@@ -10,8 +10,7 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": "./src",
-    "declaration": true,
-    "outDir": "dist"
+    "declaration": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

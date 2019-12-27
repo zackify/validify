@@ -1,8 +1,9 @@
 {
   "name": "react-validify",
-  "version": "5.6.0",
+  "version": "5.6.1",
   "description": "Form validation made easy",
   "main": "dist/index.js",
+  "module": "lib/index.js",
   "directories": {
     "example": "example"
   },
@@ -27,10 +28,10 @@
     "collectCoverage": false
   },
   "scripts": {
-    "build": "NODE_ENV=production babel --extensions \".ts,.tsx,.js\" src --out-dir dist",
+    "build": "NODE_ENV=production babel src --out-dir lib --extensions \".ts,.tsx,.js\" && NODE_ENV=production npx babel --plugins @babel/plugin-transform-modules-commonjs src --out-dir dist --extensions \".ts,.tsx,.js\"",
     "test": "jest",
     "check-types": "tsc --noEmit",
-    "export-types": "tsc --emitDeclarationOnly"
+    "export-types": "tsc --emitDeclarationOnly --outDir dist && tsc --emitDeclarationOnly --outDir lib"
   },
   "repository": {
     "type": "git",
@@ -54,6 +55,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.7.5",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.7",
