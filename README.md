@@ -1,11 +1,6 @@
 ## React Validify
 
-single dependency, simplest way to validate and manage form state with hooks!
-
-## Coming Soon
-
-- Full test coverage with testing-library
-- TS types for all the code
+single dependency, simplest way to validate and manage form state with hooks! With full test coverage and TS support.
 
 ## Install
 
@@ -57,7 +52,7 @@ Add `useField` to your own inputs inside the Form wrapper:
 import React from 'react';
 import { useField } from 'react-validify';
 
-export default props => {
+const Input = props => {
   let { handleChange, handleBlur, value, errors } = useField(props.name);
 
   return (
@@ -73,8 +68,9 @@ export default props => {
   );
 };
 ```
+This is the `Input` component you see in the first example.
 
-Add `useSubmit` to trigger submitting or validating
+Add `useSubmit` to trigger submitting or validating:
 
 ```js
 import React from 'react';
@@ -94,11 +90,12 @@ const Submit = props => {
 };
 export default Submit;
 ```
+The callback passed to `handleSubmit` will only be triggered uf validation is passing.
 
-Create rules, super quick:
+Create rules:
 
 ```js
-const testRule = (value, values) =>
+const testRule: RuleFn = (value, values) =>
   value.length > values.date2.length ? "Date can't be longer" : null;
 ```
 
