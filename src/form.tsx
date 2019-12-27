@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction, ReactNode } from 'react';
-import { RuleFn } from 'rules';
+import { RuleFn } from './rules';
 import set from 'lodash/set';
 
 export type ValuesBlurred = { [key: string]: boolean };
@@ -22,12 +22,10 @@ type Context = {
 const FormContext = React.createContext<Context>({} as Context);
 
 export type FormProps<Values> = {
-  rules?: {
-    [key in keyof Partial<Values>]: RuleFn;
-  };
   values: Values;
   children: ReactNode;
   onValues: Dispatch<SetStateAction<any>>;
+  rules?: Record<keyof Partial<Values>, RuleFn[]>;
 };
 
 function Form<Values>({
