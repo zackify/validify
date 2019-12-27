@@ -25,7 +25,7 @@ const App = () => {
     nested: { test: 'this is nested' },
   });
 
-return (
+  return (
     <Form
       values={values}
       onValues={setValues}
