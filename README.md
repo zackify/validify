@@ -24,8 +24,8 @@ const App = () => {
     email: 'test',
     nested: { test: 'this is nested' },
   });
-  // console.log(fields, 'herere');
-  return (
+
+return (
     <Form
       values={values}
       onValues={setValues}
@@ -46,7 +46,8 @@ const App = () => {
 };
 ```
 
-Add `useField` to your own inputs inside the Form wrapper:
+Add `useField` to your own inputs inside the Form wrapper. This allows you to use the library with any type of input field.
+It just needs to support a `handleChange` `handleBlur` and `value` prop. This is the `Input` component you see in the first example.
 
 ```js
 import React from 'react';
@@ -68,7 +69,6 @@ const Input = props => {
   );
 };
 ```
-This is the `Input` component you see in the first example.
 
 Add `useSubmit` to trigger submitting or validating:
 
