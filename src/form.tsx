@@ -25,7 +25,7 @@ export type FormProps<Values> = {
   values: Values;
   children: ReactNode;
   onValues: Dispatch<SetStateAction<any>>;
-  rules?: { [key in keyof Required<Values>]: RuleFn[] };
+  rules?: { [key in keyof Partial<Values>]: RuleFn[] };
 };
 
 function Form<Values>({
