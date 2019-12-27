@@ -2,6 +2,13 @@
 
 single dependency, simplest way to validate and manage form state with hooks! With full test coverage and TS support.
 
+## Contents
+
+- [Install](#install)
+- [Getting Started](#getting-started)
+- [TypeScript Support](#typescript-support)
+- [Contributors](#contributors)
+
 ## Install
 
 ```
@@ -102,6 +109,56 @@ const testRule: RuleFn = (value, values) =>
 Rules get a `value` and `values` arguments. This means you can validate an input, or validate it against other form values.
 
 Rules are guaranteed to run on a field after the first time the field is blurred, and then any time an error is present, they will run onChange.
+
+## TypeScript Support
+
+With TS enabled, you can create a type for your form values, like so:
+```tsx
+type Values = {
+  email: string;
+  date1?: string;
+  name?: string;
+};
+```
+Now when we use the form, it looks like this:
+
+```tsx
+let [values, setValues] = useState<Values>({
+    email: 'test',
+  });
+
+  return (
+    <Form
+      values={values}
+      onValues={setValues}
+      rules={{
+        email: [required, email],
+        date1: [greaterThanDate2],
+        name: [required],
+        fakeField: [] // this will error now
+      }}
+    >
+      <Input name="email" />
+    </Form>
+  )
+}
+```
+
+TS will infer the values object from the type, since we gave it to `useState`. This means, our rules object can be validated. If you accidentally leave a key for an old field in the rules object, TS will throw an error for you.
+
+You can explicitly set the type like this if you wanted:
+
+```tsx
+<Form<Values>
+  values={values}
+  onValues={setValues}
+  rules={{
+    email: [required, email],
+  }}
+>
+  <Input name="email" />
+</Form>
+```
 
 ## Contributors
 

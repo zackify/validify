@@ -3,7 +3,6 @@ example
 src
 .all-contributorsrc
 README.md
-circle.yml
 coverage
 tests
 .github
