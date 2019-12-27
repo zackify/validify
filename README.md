@@ -2,6 +2,13 @@
 
 single dependency, simplest way to validate and manage form state with hooks! With full test coverage and TS support.
 
+## Contents
+
+- [Install](#install)
+- [Getting Started](#getting-started)
+- [TypeScript Support](#typescript-support)
+- [Contributors](#contributors)
+
 ## Install
 
 ```
