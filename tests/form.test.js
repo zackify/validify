@@ -96,3 +96,15 @@ test('Submit calls onSubmit if validation passes', async () => {
   //ensure onSubmit was called this time
   expect(spy.mock.calls.length).toEqual(1);
 });
+
+test('Form works without rules object passed', async () => {
+  let { queryByPlaceholderText, queryByText } = render(<TestForm noRules />);
+
+  //blur the field
+  const name = queryByPlaceholderText('name');
+  fireEvent.blur(name);
+  fireEvent.change(name, { target: { value: 'testing' } });
+
+  //ensure the validation shows up
+  expect(name.value).toEqual('testing');
+});

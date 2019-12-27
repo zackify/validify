@@ -13,21 +13,32 @@ const greaterThanDate2 = (value, values) => {
 };
 
 type Props = {
+  noRules?: boolean;
   onSubmit?: (values: any) => any;
 };
 
-export const TestForm = ({ onSubmit }: Props) => {
-  let [values, setValues] = useState({ email: 'test' });
-  //console.log(values, 'herere');
+type TestValues = {
+  email: string;
+  date1?: string;
+  name?: string;
+};
+
+export const TestForm = ({ onSubmit, noRules }: Props) => {
+  let [values, setValues] = useState<TestValues>({ email: 'test' });
+
   return (
     <Form
       values={values}
       onValues={setValues}
-      rules={{
-        email: [required, email],
-        date1: [greaterThanDate2],
-        name: [required],
-      }}
+      rules={
+        noRules
+          ? undefined
+          : {
+              email: [required, email],
+              date1: [greaterThanDate2],
+              name: [required],
+            }
+      }
     >
       <Input name="email" />
       <Input name="name" />

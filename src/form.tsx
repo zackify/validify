@@ -2,13 +2,7 @@ import React, { useState, Dispatch, SetStateAction, ReactNode } from 'react';
 import { RuleFn } from 'rules';
 import set from 'lodash/set';
 
-export type Values = { [key: string]: string };
-
 export type ValuesBlurred = { [key: string]: boolean };
-
-export type Rules = {
-  [key: string]: RuleFn;
-};
 
 export type Error = {
   name: string;
@@ -16,8 +10,8 @@ export type Error = {
 };
 
 type Context = {
-  rules: Rules;
-  values: Values;
+  rules: any;
+  values: any;
   errors: Error[];
   valuesBlurred: ValuesBlurred;
   hasBlurred: (name: string) => any;
@@ -27,21 +21,28 @@ type Context = {
 
 const FormContext = React.createContext<Context>({} as Context);
 
-export type FormProps = {
-  rules: Rules;
+export type FormProps<Values> = {
+  rules?: {
+    [key in keyof Partial<Values>]: RuleFn;
+  };
   values: Values;
   children: ReactNode;
   onValues: Dispatch<SetStateAction<any>>;
 };
 
-const Form = ({ children, onValues, values, rules }: FormProps) => {
+function Form<Values>({
+  children,
+  onValues,
+  values,
+  rules,
+}: FormProps<Values>) {
   let [errors, setErrors] = useState<Error[]>([]);
   let [valuesBlurred, setValuesBlurred] = useState<ValuesBlurred>({});
 
   return (
     <FormContext.Provider
       value={{
-        rules,
+        rules: rules || {},
         values,
         errors,
         setErrors,
@@ -64,7 +65,7 @@ const Form = ({ children, onValues, values, rules }: FormProps) => {
       {children}
     </FormContext.Provider>
   );
-};
+}
 
 const FormContextConsumer = FormContext.Consumer;
 

@@ -12,8 +12,14 @@ const greaterThanDate2: RuleFn = (value, values) => {
     return 'Must be longer date than date 2';
 };
 
+type TestValues = {
+  email: string;
+  date1?: string;
+  name?: string;
+};
+
 const App = () => {
-  let [values, setValues] = React.useState({ email: 'test' });
+  let [values, setValues] = React.useState<TestValues>({ email: 'test' });
   //console.log(values, 'herere');
   return (
     <Form
