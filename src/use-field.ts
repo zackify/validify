@@ -30,7 +30,7 @@ const useField = (name: string) => {
     errors,
   };
 
-  const handleChange = (value: string, field?: string) => {
+  const handleChange = (value: any, field?: string) => {
     /*
       If this field 
       - has errors
