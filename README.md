@@ -1,6 +1,6 @@
 ## React Validify
 
-single dependency, simplest way to validate and manage form state with hooks! With full test coverage and TS support.
+single dependency, simplest way to validate and manage form state with hooks in React + React Native! With full test coverage and TS support.
 
 ## Contents
 
@@ -97,7 +97,7 @@ const Submit = props => {
 };
 export default Submit;
 ```
-The callback passed to `handleSubmit` will only be triggered uf validation is passing.
+The callback passed to `handleSubmit` will only be triggered if validation is passing.
 
 Create rules:
 

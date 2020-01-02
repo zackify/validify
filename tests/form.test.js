@@ -8,7 +8,7 @@ test('Checks dependent rule', async () => {
 
   // put a 2 character string in the date 2 field
   const date2 = queryByPlaceholderText('date2');
-  fireEvent.change(date2, { target: { name: 'date1', value: 22 } });
+  fireEvent.change(date2, { target: { value: 22 } });
 
   // confirm the error message doesn't show yet
   const date1 = queryByPlaceholderText('date1');
@@ -16,10 +16,34 @@ test('Checks dependent rule', async () => {
 
   // make the date1 field a single character, and blur it, which should trigger
   // the error message
-  fireEvent.change(date1, { target: { name: 'date1', value: 2 } });
+  fireEvent.change(date1, { target: { value: 2 } });
   fireEvent.blur(date1);
 
   // confirm the error message is displayed
+  expect(getByText(errorMessage)).toBeInTheDocument();
+});
+
+test(`Validates fields that aren't changed, but their dependent fields changed`, async () => {
+  let errorMessage = 'Must be longer value than date 2 field';
+  let { queryByPlaceholderText, queryByText, getByText } = render(<TestForm />);
+
+  const date1 = queryByPlaceholderText('date1');
+  const date2 = queryByPlaceholderText('date2');
+
+  //fill in both fields correctly
+  fireEvent.change(date2, { target: { value: 'short' } });
+  fireEvent.change(date1, { target: { value: 'longer' } });
+
+  // blur them both to confirm errors should show immediately now
+  fireEvent.blur(date1);
+  fireEvent.blur(date2);
+
+  // confirm no error yet
+  expect(queryByText(errorMessage)).toBeNull();
+
+  // change date 2 field, which has no validation itself, and make sure
+  // that date1 is validated on change
+  fireEvent.change(date2, { target: { value: 'longer than date1' } });
   expect(getByText(errorMessage)).toBeInTheDocument();
 });
 
