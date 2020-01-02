@@ -1,6 +1,23 @@
 import get from 'lodash/get';
+import { Dispatch, SetStateAction } from 'react';
+import { Error } from './form';
+import { RuleFn } from 'rules';
 
-export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
+type Props = {
+  values: any;
+  rules: { [key: string]: RuleFn[] };
+  setErrors: Dispatch<SetStateAction<Error[]>>;
+  errors?: Error[];
+  valuesBlurred?: { [key: string]: boolean };
+};
+
+export default ({
+  values,
+  rules,
+  errors = [],
+  setErrors,
+  valuesBlurred,
+}: Props) => {
   let newErrors = Object.keys(rules)
     .filter(rule => {
       if (errors.filter(error => error.name === rule).length) return true;
@@ -21,7 +38,7 @@ export default ({ values, rules, errors = [], setErrors, valuesBlurred }) => {
       }),
     )
     .reduce((acc, row) => [...acc, ...row], [])
-    .filter(Boolean);
+    .filter(Boolean) as Error[];
 
   setErrors(newErrors);
   return newErrors;

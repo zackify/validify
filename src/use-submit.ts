@@ -5,7 +5,7 @@ import { FormContext } from './form';
 const useSubmit = () => {
   const { rules, values, errors, setErrors } = React.useContext(FormContext);
 
-  const handleSubmit = callback => {
+  const handleSubmit = (callback: (values: any) => any) => {
     let errors = validate({
       values,
       rules,

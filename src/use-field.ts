@@ -4,7 +4,7 @@ import set from 'lodash/set';
 import validate from './validate';
 import { FormContext } from './form';
 
-const useField = name => {
+const useField = (name: string) => {
   const {
     errors,
     rules,
@@ -30,7 +30,7 @@ const useField = name => {
     errors,
   };
 
-  const handleChange = (value, field) => {
+  const handleChange = (value: string, field?: string) => {
     /*
       If this field 
       - has errors
