@@ -10,8 +10,12 @@ type Props = {
   valuesBlurred?: { [key: string]: boolean };
 };
 
-export default ({ values, rules, setErrors }: Props) => {
+export default ({ values, rules, setErrors, valuesBlurred }: Props) => {
   let newErrors = Object.keys(rules)
+    .filter(rule => {
+      if (valuesBlurred) return valuesBlurred[rule];
+      return true;
+    })
     .map(field =>
       rules[field].map(rule => {
         let error = rule(get(values, field) || '', values);

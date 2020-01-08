@@ -164,3 +164,14 @@ test('Field validation runs on change, after submitting', async () => {
   //ensure the validation shows up
   expect(getByText('This field is required')).toBeInTheDocument();
 });
+
+test(`Untouched fields shouldn't validate unless submitted first`, () => {
+  let { queryByPlaceholderText, queryByText } = render(<TestForm />);
+  const email = queryByPlaceholderText('email');
+
+  fireEvent.focus(email);
+  fireEvent.change(email, { target: { value: 'test@test.com' } });
+  fireEvent.blur(email);
+
+  expect(queryByText('This field is required')).toBeNull();
+});
