@@ -27,7 +27,7 @@ export default ({
     })
     .map(field =>
       rules[field].map(rule => {
-        let error = rule(get(values, field), values);
+        let error = rule(get(values, field) || '', values);
 
         if (!error) return false;
 
