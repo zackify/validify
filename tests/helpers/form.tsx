@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form } from '../../src/form';
 import { useState } from 'react';
-import { required, email } from '../../src/rules';
+import { required, email, RuleFn } from '../../src/rules';
 import Input from './input';
 import Submit from './submit';
 
@@ -14,6 +14,7 @@ const greaterThanDate2 = (value, values) => {
 
 type Props = {
   noRules?: boolean;
+  nameRule?: RuleFn;
   onSubmit?: (values: any) => any;
 };
 
@@ -23,7 +24,7 @@ type TestValues = {
   name?: string;
 };
 
-export const TestForm = ({ onSubmit, noRules }: Props) => {
+export const TestForm = ({ onSubmit, noRules, nameRule }: Props) => {
   let [values, setValues] = useState<TestValues>({ email: 'test' });
 
   return (
@@ -36,7 +37,7 @@ export const TestForm = ({ onSubmit, noRules }: Props) => {
           : {
               email: [required, email],
               date1: [greaterThanDate2],
-              name: [required],
+              name: [nameRule || required],
             }
       }
     >

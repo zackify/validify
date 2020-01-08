@@ -132,3 +132,18 @@ test('Form works without rules object passed', async () => {
   //ensure the validation shows up
   expect(name.value).toEqual('testing');
 });
+
+test('Empty input value gets passed as empty string to rule fn', async () => {
+  const spy = jest.fn();
+  let { queryByPlaceholderText, queryByText } = render(
+    <TestForm nameRule={spy} />,
+  );
+  const submit = queryByText('Submit Form');
+
+  //press the submit button
+  submit.click();
+
+  //ensure that the value given to the rule is an empty string if it wasnt touched
+  expect(spy.mock.calls[0][0]).toEqual('');
+  expect(spy.mock.calls[0][1]).toEqual({ email: 'test' });
+});
