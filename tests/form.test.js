@@ -147,3 +147,20 @@ test('Empty input value gets passed as empty string to rule fn', async () => {
   expect(spy.mock.calls[0][0]).toEqual('');
   expect(spy.mock.calls[0][1]).toEqual({ email: 'test' });
 });
+
+test('Field validation runs on change, after submitting', async () => {
+  let { queryByPlaceholderText, getByText } = render(<TestForm />);
+  const name = queryByPlaceholderText('name');
+
+  //trigger submit
+  getByText('Submit Form').click();
+
+  //change name to something valid
+  fireEvent.change(name, { target: { value: 'testing' } });
+
+  // change it back to invalid, and make sure the validation is shown
+  fireEvent.change(name, { target: { value: '' } });
+
+  //ensure the validation shows up
+  expect(getByText('This field is required')).toBeInTheDocument();
+});

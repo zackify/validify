@@ -7,24 +7,11 @@ type Props = {
   values: any;
   rules: { [key: string]: RuleFn[] };
   setErrors: Dispatch<SetStateAction<Error[]>>;
-  errors?: Error[];
   valuesBlurred?: { [key: string]: boolean };
 };
 
-export default ({
-  values,
-  rules,
-  errors = [],
-  setErrors,
-  valuesBlurred,
-}: Props) => {
+export default ({ values, rules, setErrors }: Props) => {
   let newErrors = Object.keys(rules)
-    .filter(rule => {
-      if (errors.filter(error => error.name === rule).length) return true;
-      if (valuesBlurred) return valuesBlurred[rule];
-
-      return true;
-    })
     .map(field =>
       rules[field].map(rule => {
         let error = rule(get(values, field) || '', values);

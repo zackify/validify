@@ -17,6 +17,7 @@ type Context = {
   hasBlurred: (name: string) => any;
   setErrors: Dispatch<SetStateAction<Error[]>>;
   updateValue: (name: string, value: string) => any;
+  setValuesBlurred: Dispatch<SetStateAction<ValuesBlurred>>;
 };
 
 const FormContext = React.createContext<Context>({} as Context);
@@ -45,6 +46,7 @@ function Form<Values>({
         errors,
         setErrors,
         valuesBlurred,
+        setValuesBlurred,
         hasBlurred: name => {
           if (valuesBlurred[name]) return;
           //Store list of values that have been touched, so we can run validation on them now
