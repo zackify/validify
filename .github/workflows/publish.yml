@@ -23,6 +23,7 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn build
       - run: yarn export-types
+      - run: yarn config set version-commit-hooks false
       - run: yarn publish --new-version ${GITHUB_REF:10}
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
