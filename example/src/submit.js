@@ -1,13 +1,13 @@
-import React from 'react';
-import { useSubmit } from 'react-validify';
+import { useSubmit } from "react-validify";
 
-const Submit = props => {
-  let { canSubmit, values } = useSubmit();
+const Submit = (props) => {
+  let { canSubmit, handleSubmit } = useSubmit();
 
   return (
     <div
       onClick={() => {
-        if (canSubmit) return console.log('submit!', values);
+        if (canSubmit)
+          return handleSubmit((values) => console.log("submit!", values));
       }}
       style={{ opacity: canSubmit ? 1 : 0.5 }}
     >

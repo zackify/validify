@@ -1,8 +1,16 @@
-import React, { useState, Dispatch, SetStateAction, ReactNode } from 'react';
-import { RuleFn } from './rules';
-import set from 'lodash/set';
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+  MutableRefObject,
+  useRef,
+} from "react";
+import { RuleFn } from "./rules";
+import set from "lodash/set";
 
 export type ValuesBlurred = { [key: string]: boolean };
+export type RulesRef = { [key: string]: RuleFn[] };
 
 export type Error = {
   name: string;
@@ -10,7 +18,7 @@ export type Error = {
 };
 
 type Context = {
-  rules: any;
+  rules: MutableRefObject<RulesRef>;
   values: any;
   errors: Error[];
   valuesBlurred: ValuesBlurred;
@@ -26,28 +34,23 @@ export type FormProps<Values> = {
   values: Values;
   children: ReactNode;
   onValues: Dispatch<SetStateAction<any>>;
-  rules?: { [key in keyof Partial<Values>]: RuleFn[] };
 };
 
-function Form<Values>({
-  children,
-  onValues,
-  values,
-  rules,
-}: FormProps<Values>) {
+function Form<Values>({ children, onValues, values }: FormProps<Values>) {
+  let rules = useRef<RulesRef>({});
   let [errors, setErrors] = useState<Error[]>([]);
   let [valuesBlurred, setValuesBlurred] = useState<ValuesBlurred>({});
 
   return (
     <FormContext.Provider
       value={{
-        rules: rules || {},
+        rules,
         values,
         errors,
         setErrors,
         valuesBlurred,
         setValuesBlurred,
-        hasBlurred: name => {
+        hasBlurred: (name) => {
           if (valuesBlurred[name]) return;
           //Store list of values that have been touched, so we can run validation on them now
           setValuesBlurred({

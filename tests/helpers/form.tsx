@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { Form } from '../../src/form';
-import { useState } from 'react';
-import { required, email, RuleFn } from '../../src/rules';
-import Input from './input';
-import Submit from './submit';
+import React, { useEffect } from "react";
+import { Form } from "../../src/form";
+import { useState } from "react";
+import { required, email, RuleFn } from "../../src/rules";
+import Input from "./input";
+import Submit from "./submit";
 
 const greaterThanDate2 = (value, values) => {
   if (!values.date2) return false;
 
   if (value.length < values.date2.length)
-    return 'Must be longer value than date 2 field';
+    return "Must be longer value than date 2 field";
 };
 
 type Props = {
@@ -25,25 +25,13 @@ type TestValues = {
 };
 
 export const TestForm = ({ onSubmit, noRules, nameRule }: Props) => {
-  let [values, setValues] = useState<TestValues>({ email: 'test' });
+  let [values, setValues] = useState<TestValues>({ email: "test" });
 
   return (
-    <Form
-      values={values}
-      onValues={setValues}
-      rules={
-        noRules
-          ? undefined
-          : {
-              email: [required, email],
-              date1: [greaterThanDate2],
-              name: [nameRule || required],
-            }
-      }
-    >
-      <Input name="email" />
-      <Input name="name" />
-      <Input name="date1" />
+    <Form values={values} onValues={setValues}>
+      <Input name="email" rules={noRules ? undefined : [required, email]} />
+      <Input name="name" rules={noRules ? undefined : [nameRule || required]} />
+      <Input name="date1" rules={noRules ? undefined : [greaterThanDate2]} />
       <Input name="date2" />
       <Submit onSubmit={onSubmit} />
     </Form>

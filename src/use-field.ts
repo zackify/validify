@@ -1,25 +1,33 @@
-import React from 'react';
-import get from 'lodash/get';
-import set from 'lodash/set';
-import validate from './validate';
-import { FormContext } from './form';
+import React from "react";
+import get from "lodash/get";
+import set from "lodash/set";
+import validate from "./validate";
+import { FormContext } from "./form";
+import { RuleFn } from "rules";
 
-const useField = (name: string) => {
+export type UseFieldProps = {
+  name: string;
+  rules?: RuleFn[];
+};
+
+const useField = ({ name, rules: fieldRules }: UseFieldProps) => {
   const {
     errors,
-    rules,
     values,
     setErrors,
     hasBlurred,
     updateValue,
     valuesBlurred,
+    rules,
   } = React.useContext(FormContext);
+
+  rules.current[name] = fieldRules || [];
 
   let value = get(values, name);
   // Pulling out just this field's errors
   let fieldErrors = errors
-    .filter(error => error.name === name)
-    .map(error => error.message);
+    .filter((error) => error.name === name)
+    .map((error) => error.message);
 
   //Args needed for validation
   let validationProps = {

@@ -1,17 +1,17 @@
-import React from 'react';
-import { render, fireEvent, wait } from '@testing-library/react';
-import { TestForm } from './helpers/form';
+import React from "react";
+import { render, fireEvent, wait } from "@testing-library/react";
+import { TestForm } from "./helpers/form";
 
-test('Checks dependent rule', async () => {
-  let errorMessage = 'Must be longer value than date 2 field';
+test("Checks dependent rule", async () => {
+  let errorMessage = "Must be longer value than date 2 field";
   let { queryByPlaceholderText, queryByText, getByText } = render(<TestForm />);
 
   // put a 2 character string in the date 2 field
-  const date2 = queryByPlaceholderText('date2');
+  const date2 = queryByPlaceholderText("date2");
   fireEvent.change(date2, { target: { value: 22 } });
 
   // confirm the error message doesn't show yet
-  const date1 = queryByPlaceholderText('date1');
+  const date1 = queryByPlaceholderText("date1");
   expect(queryByText(errorMessage)).toBeNull();
 
   // make the date1 field a single character, and blur it, which should trigger
@@ -24,15 +24,15 @@ test('Checks dependent rule', async () => {
 });
 
 test(`Validates fields that aren't changed, but their dependent fields changed`, async () => {
-  let errorMessage = 'Must be longer value than date 2 field';
+  let errorMessage = "Must be longer value than date 2 field";
   let { queryByPlaceholderText, queryByText, getByText } = render(<TestForm />);
 
-  const date1 = queryByPlaceholderText('date1');
-  const date2 = queryByPlaceholderText('date2');
+  const date1 = queryByPlaceholderText("date1");
+  const date2 = queryByPlaceholderText("date2");
 
   //fill in both fields correctly
-  fireEvent.change(date2, { target: { value: 'short' } });
-  fireEvent.change(date1, { target: { value: 'longer' } });
+  fireEvent.change(date2, { target: { value: "short" } });
+  fireEvent.change(date1, { target: { value: "longer" } });
 
   // blur them both to confirm errors should show immediately now
   fireEvent.blur(date1);
@@ -43,25 +43,25 @@ test(`Validates fields that aren't changed, but their dependent fields changed`,
 
   // change date 2 field, which has no validation itself, and make sure
   // that date1 is validated on change
-  fireEvent.change(date2, { target: { value: 'longer than date1' } });
+  fireEvent.change(date2, { target: { value: "longer than date1" } });
   expect(getByText(errorMessage)).toBeInTheDocument();
 });
 
-test('Validation runs after blur', async () => {
+test("Validation runs after blur", async () => {
   let { queryByPlaceholderText, queryByText } = render(<TestForm />);
 
   //blur the field
-  const name = queryByPlaceholderText('name');
+  const name = queryByPlaceholderText("name");
   fireEvent.blur(name);
 
   //ensure the validation shows up
-  expect(queryByText('This field is required')).toBeInTheDocument();
+  expect(queryByText("This field is required")).toBeInTheDocument();
 });
 
-test('Validation runs on change after initial blur', async () => {
+test("Validation runs on change after initial blur", async () => {
   let { queryByPlaceholderText, queryByText } = render(<TestForm />);
 
-  const name = queryByPlaceholderText('name');
+  const name = queryByPlaceholderText("name");
 
   // blur out of the field
   fireEvent.blur(name);
@@ -69,36 +69,36 @@ test('Validation runs on change after initial blur', async () => {
   fireEvent.blur(name);
 
   // make sure the validation error shows up
-  expect(queryByText('This field is required')).toBeInTheDocument();
+  expect(queryByText("This field is required")).toBeInTheDocument();
 
   //fill in the field with anything
-  fireEvent.change(name, { target: { value: 'filled' } });
+  fireEvent.change(name, { target: { value: "filled" } });
 
   //ensure the validation goes away
-  expect(queryByText('This field is required')).toBeNull();
+  expect(queryByText("This field is required")).toBeNull();
 });
 
-test('Validation runs after submit', async () => {
+test("Validation runs after submit", async () => {
   let { queryByText } = render(<TestForm />);
-  const submit = queryByText('Submit Form');
+  const submit = queryByText("Submit Form");
 
   //ensure the validation isn't showing
-  expect(queryByText('This field is required')).toBeNull();
+  expect(queryByText("This field is required")).toBeNull();
 
   //press the submit button
   submit.click();
 
   //see if the validation is now showing for fields
-  expect(queryByText('This field is required')).toBeInTheDocument();
-  expect(queryByText('Email address is invalid')).toBeInTheDocument();
+  expect(queryByText("This field is required")).toBeInTheDocument();
+  expect(queryByText("Email address is invalid")).toBeInTheDocument();
 });
 
-test('Submit calls onSubmit if validation passes', async () => {
+test("Submit calls onSubmit if validation passes", async () => {
   const spy = jest.fn();
   let { queryByPlaceholderText, queryByText } = render(
-    <TestForm onSubmit={spy} />,
+    <TestForm onSubmit={spy} />
   );
-  const submit = queryByText('Submit Form');
+  const submit = queryByText("Submit Form");
 
   //press the submit button
   submit.click();
@@ -107,11 +107,11 @@ test('Submit calls onSubmit if validation passes', async () => {
   expect(spy.mock.calls.length).toEqual(0);
 
   //fill in required fields, so validation will pass
-  fireEvent.change(queryByPlaceholderText('name'), {
-    target: { value: 'test' },
+  fireEvent.change(queryByPlaceholderText("name"), {
+    target: { value: "test" },
   });
-  fireEvent.change(queryByPlaceholderText('email'), {
-    target: { value: 'test@test.com' },
+  fireEvent.change(queryByPlaceholderText("email"), {
+    target: { value: "test@test.com" },
   });
 
   //press the submit button with passing validation
@@ -121,57 +121,68 @@ test('Submit calls onSubmit if validation passes', async () => {
   expect(spy.mock.calls.length).toEqual(1);
 });
 
-test('Form works without rules object passed', async () => {
+test("Form works without rules object passed", async () => {
   let { queryByPlaceholderText, queryByText } = render(<TestForm noRules />);
 
   //blur the field
-  const name = queryByPlaceholderText('name');
+  const name = queryByPlaceholderText("name");
   fireEvent.blur(name);
-  fireEvent.change(name, { target: { value: 'testing' } });
+  fireEvent.change(name, { target: { value: "testing" } });
 
   //ensure the validation shows up
-  expect(name.value).toEqual('testing');
+  expect(name.value).toEqual("testing");
 });
 
-test('Empty input value gets passed as empty string to rule fn', async () => {
+test("Empty input value gets passed as empty string to rule fn", async () => {
   const spy = jest.fn();
   let { queryByPlaceholderText, queryByText } = render(
-    <TestForm nameRule={spy} />,
+    <TestForm nameRule={spy} />
   );
-  const submit = queryByText('Submit Form');
+  const submit = queryByText("Submit Form");
 
   //press the submit button
   submit.click();
 
   //ensure that the value given to the rule is an empty string if it wasnt touched
-  expect(spy.mock.calls[0][0]).toEqual('');
-  expect(spy.mock.calls[0][1]).toEqual({ email: 'test' });
+  expect(spy.mock.calls[0][0]).toEqual("");
+  expect(spy.mock.calls[0][1]).toEqual({ email: "test" });
 });
 
-test('Field validation runs on change, after submitting', async () => {
+test("Field validation shows errors on submit even without touching any fields", async () => {
   let { queryByPlaceholderText, getByText } = render(<TestForm />);
-  const name = queryByPlaceholderText('name');
+  const name = queryByPlaceholderText("name");
 
   //trigger submit
-  getByText('Submit Form').click();
-
-  //change name to something valid
-  fireEvent.change(name, { target: { value: 'testing' } });
-
-  // change it back to invalid, and make sure the validation is shown
-  fireEvent.change(name, { target: { value: '' } });
+  getByText("Submit Form").click();
 
   //ensure the validation shows up
-  expect(getByText('This field is required')).toBeInTheDocument();
+  expect(getByText("This field is required")).toBeInTheDocument();
+});
+
+test("Field validation runs on change, after submitting", async () => {
+  let { queryByPlaceholderText, getByText } = render(<TestForm />);
+  const name = queryByPlaceholderText("name");
+
+  //trigger submit
+  getByText("Submit Form").click();
+
+  //change name to something valid
+  fireEvent.change(name, { target: { value: "testing" } });
+
+  // change it back to invalid, and make sure the validation is shown
+  fireEvent.change(name, { target: { value: "" } });
+
+  //ensure the validation shows up
+  expect(getByText("This field is required")).toBeInTheDocument();
 });
 
 test(`Untouched fields shouldn't validate unless submitted first`, () => {
   let { queryByPlaceholderText, queryByText } = render(<TestForm />);
-  const email = queryByPlaceholderText('email');
+  const email = queryByPlaceholderText("email");
 
   fireEvent.focus(email);
-  fireEvent.change(email, { target: { value: 'test@test.com' } });
+  fireEvent.change(email, { target: { value: "test@test.com" } });
   fireEvent.blur(email);
 
-  expect(queryByText('This field is required')).toBeNull();
+  expect(queryByText("This field is required")).toBeNull();
 });

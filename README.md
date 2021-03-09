@@ -12,7 +12,7 @@ single dependency, simplest way to validate and manage form state with hooks in 
 ## Install
 
 ```
-npm install react-validify
+npm install react-validify lodash
 ```
 
 ## Getting Started
@@ -20,31 +20,23 @@ npm install react-validify
 This api has been carefully thought out over the past year. It's been in use on multiple React websites and React Native mobile applications. Using the library is simple. Include the `Form` component, and wrap your `input`'s and `submit` buttons.
 
 ```js
-import Input from './input';
-import Submit from './submit';
-import { Form, rules } from 'react-validify';
+import Input from "./input";
+import Submit from "./submit";
+import { Form, rules } from "react-validify";
 
 const { required, email } = rules;
 
 const App = () => {
   let [values, setValues] = React.useState({
-    email: 'test',
-    nested: { test: 'this is nested' },
+    email: "test",
+    nested: { test: "this is nested" },
   });
 
   return (
-    <Form
-      values={values}
-      onValues={setValues}
-      rules={{
-        email: [required, email],
-        date1: [greaterThanDate2],
-        name: [required],
-      }}
-    >
-      <Input name="email" />
-      <Input name="name" />
-      <Input name="date1" />
+    <Form values={values} onValues={setValues}>
+      <Input name="email" rules={[required, email]} />
+      <Input name="name" rules={[required]} />
+      <Input name="date1" rules={[greaterThanDate2]} />
       <Input name="date2" />
       <Input name="nested.test" />
       <Submit />
@@ -57,11 +49,11 @@ Add `useField` to your own inputs inside the Form wrapper. This allows you to us
 It just needs to support a `handleChange` `handleBlur` and `value` prop. This is the `Input` component you see in the first example. Don't forget to pass the field `name` to the hook.
 
 ```js
-import React from 'react';
-import { useField } from 'react-validify';
+import React from "react";
+import { useField, UseFieldProps } from "react-validify";
 
-const Input = ({ name }) => {
-  let { handleChange, handleBlur, value, errors } = useField(name);
+const Input = ({ name, rules }: UseFieldProps) => {
+  let { handleChange, handleBlur, value, errors } = useField({ name, rules });
 
   return (
     <div>
@@ -70,7 +62,7 @@ const Input = ({ name }) => {
         name={name}
         value={value}
         onBlur={handleBlur}
-        onChange={event => handleChange(event.target.value)}
+        onChange={(event) => handleChange(event.target.value)}
       />
     </div>
   );
@@ -80,15 +72,15 @@ const Input = ({ name }) => {
 Add `useSubmit` to trigger submitting or validating:
 
 ```js
-import React from 'react';
-import { useSubmit } from 'react-validify';
+import React from "react";
+import { useSubmit } from "react-validify";
 
-const Submit = props => {
+const Submit = (props) => {
   let { canSubmit, handleSubmit } = useSubmit();
 
   return (
     <div
-      onClick={() => handleSubmit(values => console.log('submit!', values))}
+      onClick={() => handleSubmit((values) => console.log("submit!", values))}
       style={{ opacity: canSubmit ? 1 : 0.5 }}
     >
       Submit Form
@@ -97,6 +89,7 @@ const Submit = props => {
 };
 export default Submit;
 ```
+
 The callback passed to `handleSubmit` will only be triggered if validation is passing.
 
 Create rules:
@@ -113,6 +106,7 @@ Rules are guaranteed to run on a field after the first time the field is blurred
 ## TypeScript Support
 
 With TS enabled, you can create a type for your form values, like so:
+
 ```tsx
 type Values = {
   email: string;
@@ -120,6 +114,7 @@ type Values = {
   name?: string;
 };
 ```
+
 Now when we use the form, it looks like this:
 
 ```tsx
@@ -131,33 +126,11 @@ let [values, setValues] = useState<Values>({
     <Form
       values={values}
       onValues={setValues}
-      rules={{
-        email: [required, email],
-        date1: [greaterThanDate2],
-        name: [required],
-        fakeField: [] // this will error now
-      }}
     >
-      <Input name="email" />
+      <Input name="email" rules={[required, email]}/>
     </Form>
   )
 }
-```
-
-TS will infer the values object from the type, since we gave it to `useState`. This means, our rules object can be validated. If you accidentally leave a key for an old field in the rules object, TS will throw an error for you.
-
-You can explicitly set the type like this if you wanted:
-
-```tsx
-<Form<Values>
-  values={values}
-  onValues={setValues}
-  rules={{
-    email: [required, email],
-  }}
->
-  <Input name="email" />
-</Form>
 ```
 
 ## Contributors
@@ -168,7 +141,6 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 | [<img src="https://avatars0.githubusercontent.com/u/449136?v=4" width="100px;"/><br /><sub>Zach Silveira</sub>](https://zach.codes)<br /> | [<img src="https://avatars1.githubusercontent.com/u/2430381?v=4" width="100px;"/><br /><sub>Ryan Castner</sub>](http://audiolion.github.io)<br /> |
 | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------: |
-
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

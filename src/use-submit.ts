@@ -1,6 +1,6 @@
-import React from 'react';
-import validate from './validate';
-import { FormContext } from './form';
+import React from "react";
+import validate from "./validate";
+import { FormContext } from "./form";
 
 const useSubmit = () => {
   const {
@@ -22,7 +22,10 @@ const useSubmit = () => {
     // if there are errors, mark all values as blurred,
     // so validation runs on change after hitting submit
     setValuesBlurred(
-      Object.keys(rules).reduce((acc, name) => ({ ...acc, [name]: true }), {}),
+      Object.keys(rules.current).reduce(
+        (acc, name) => ({ ...acc, [name]: true }),
+        {}
+      )
     );
   };
 
