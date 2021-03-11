@@ -1,6 +1,6 @@
 import React from "react";
-import { render, fireEvent, wait } from "@testing-library/react";
-import { TestForm } from "./helpers/form";
+import { render, fireEvent, wait, act } from "@testing-library/react";
+import { TestForm, TestFormWithRemovedField } from "./helpers/form";
 
 test("Checks dependent rule", async () => {
   let errorMessage = "Must be longer value than date 2 field";
@@ -122,7 +122,7 @@ test("Submit calls onSubmit if validation passes", async () => {
 });
 
 test("Form works without rules object passed", async () => {
-  let { queryByPlaceholderText, queryByText } = render(<TestForm noRules />);
+  let { queryByPlaceholderText } = render(<TestForm noRules />);
 
   //blur the field
   const name = queryByPlaceholderText("name");
@@ -135,9 +135,7 @@ test("Form works without rules object passed", async () => {
 
 test("Empty input value gets passed as empty string to rule fn", async () => {
   const spy = jest.fn();
-  let { queryByPlaceholderText, queryByText } = render(
-    <TestForm nameRule={spy} />
-  );
+  let { queryByText } = render(<TestForm nameRule={spy} />);
   const submit = queryByText("Submit Form");
 
   //press the submit button
@@ -149,8 +147,7 @@ test("Empty input value gets passed as empty string to rule fn", async () => {
 });
 
 test("Field validation shows errors on submit even without touching any fields", async () => {
-  let { queryByPlaceholderText, getByText } = render(<TestForm />);
-  const name = queryByPlaceholderText("name");
+  let { getByText } = render(<TestForm />);
 
   //trigger submit
   getByText("Submit Form").click();
@@ -185,4 +182,31 @@ test(`Untouched fields shouldn't validate unless submitted first`, () => {
   fireEvent.blur(email);
 
   expect(queryByText("This field is required")).toBeNull();
+});
+
+test(`Doesnt check rule after component is unmounted`, async () => {
+  const spy = jest.fn();
+  let { getByText, queryByPlaceholderText } = render(
+    <TestFormWithRemovedField onSubmit={spy} />
+  );
+  fireEvent.change(queryByPlaceholderText("email"), {
+    target: { value: "" },
+  });
+  await act(async () => await new Promise((resolve) => setTimeout(resolve, 0)));
+  expect(queryByPlaceholderText("email")).toEqual(null);
+
+  fireEvent.change(queryByPlaceholderText("name"), {
+    target: { value: "testing" },
+  });
+  fireEvent.change(queryByPlaceholderText("date1"), {
+    target: { value: "testing" },
+  });
+  fireEvent.change(queryByPlaceholderText("date2"), {
+    target: { value: "test" },
+  });
+
+  getByText("Submit Form").click();
+
+  //it should call submit even though email is empty, because it was unmounted
+  expect(spy.mock.calls[0][0].email).toEqual("");
 });

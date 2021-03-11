@@ -31,6 +31,7 @@ const useSubmit = () => {
 
   return {
     values,
+    errors,
     handleSubmit,
     canSubmit: !errors.length,
   };

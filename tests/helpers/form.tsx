@@ -16,6 +16,7 @@ type Props = {
   noRules?: boolean;
   nameRule?: RuleFn;
   onSubmit?: (values: any) => any;
+  unmountEmail?: boolean;
 };
 
 type TestValues = {
@@ -24,16 +25,33 @@ type TestValues = {
   name?: string;
 };
 
-export const TestForm = ({ onSubmit, noRules, nameRule }: Props) => {
+export const TestForm = ({
+  onSubmit,
+  noRules,
+  nameRule,
+  unmountEmail,
+}: Props) => {
   let [values, setValues] = useState<TestValues>({ email: "test" });
 
   return (
     <Form values={values} onValues={setValues}>
-      <Input name="email" rules={noRules ? undefined : [required, email]} />
+      {unmountEmail ? null : (
+        <Input name="email" rules={noRules ? undefined : [required, email]} />
+      )}
       <Input name="name" rules={noRules ? undefined : [nameRule || required]} />
       <Input name="date1" rules={noRules ? undefined : [greaterThanDate2]} />
       <Input name="date2" />
       <Submit onSubmit={onSubmit} />
     </Form>
   );
+};
+
+export const TestFormWithRemovedField = (props: Props) => {
+  let [unmountEmail, setUnmount] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setUnmount(true), 0);
+  }, []);
+
+  return <TestForm {...props} unmountEmail={unmountEmail} />;
 };

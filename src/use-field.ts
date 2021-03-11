@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import get from "lodash/get";
 import set from "lodash/set";
 import validate from "./validate";
@@ -21,7 +21,13 @@ const useField = ({ name, rules: fieldRules }: UseFieldProps) => {
     rules,
   } = React.useContext(FormContext);
 
-  rules.current[name] = fieldRules || [];
+  //set the rules when they change, clear when unmounted
+  useEffect(() => {
+    rules.current[name] = fieldRules || [];
+    return () => {
+      rules.current[name] = [];
+    };
+  }, [fieldRules]);
 
   let value = get(values, name);
   // Pulling out just this field's errors
