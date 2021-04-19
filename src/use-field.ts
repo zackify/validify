@@ -3,14 +3,14 @@ import get from "lodash/get";
 import set from "lodash/set";
 import validate from "./validate";
 import { FormContext } from "./form";
-import { RuleFn } from "rules";
+import { RuleFns } from "rules";
 
-export type UseFieldProps = {
+export type FieldProps = {
   name: string;
-  rules?: RuleFn[];
+  rules?: RuleFns;
 };
 
-const useField = ({ name, rules: fieldRules }: UseFieldProps) => {
+export const useField = ({ name, rules: fieldRules }: FieldProps) => {
   const {
     errors,
     values,
@@ -23,7 +23,13 @@ const useField = ({ name, rules: fieldRules }: UseFieldProps) => {
 
   //set the rules when they change, clear when unmounted
   useEffect(() => {
-    rules.current[name] = fieldRules || [];
+    //This check lets us pass in a single rule without making an array, or an array of rules
+    if (Array.isArray(fieldRules)) {
+      rules.current[name] = fieldRules;
+    } else {
+      rules.current[name] = fieldRules ? [fieldRules] : [];
+    }
+
     return () => {
       rules.current[name] = [];
     };
@@ -86,5 +92,3 @@ const useField = ({ name, rules: fieldRules }: UseFieldProps) => {
     errors: fieldErrors.length ? fieldErrors : null,
   };
 };
-
-export default useField;

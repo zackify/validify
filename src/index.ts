@@ -1,6 +1,6 @@
-import { Form } from "./form";
+export * from "./form";
+export * from "./use-field";
+export * from "./use-submit";
 import * as rules from "./rules";
-import useField from "./use-field";
-import useSubmit from "./use-submit";
 
-export { Form, useField, useSubmit, rules };
+export { rules };

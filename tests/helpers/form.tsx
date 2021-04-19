@@ -55,3 +55,20 @@ export const TestFormWithRemovedField = (props: Props) => {
 
   return <TestForm {...props} unmountEmail={unmountEmail} />;
 };
+
+export const TestFormWithSingleRule = ({
+  onSubmit,
+  noRules,
+  nameRule,
+  unmountEmail,
+}: Props) => {
+  let [values, setValues] = useState<TestValues>({ email: "test" });
+
+  return (
+    <Form values={values} onValues={setValues}>
+      <Input name="email" rules={email} />
+
+      <Submit onSubmit={onSubmit} />
+    </Form>
+  );
+};

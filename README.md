@@ -50,9 +50,11 @@ It just needs to support a `handleChange` `handleBlur` and `value` prop. This is
 
 ```js
 import React from "react";
-import { useField, UseFieldProps } from "react-validify";
+import { useField, FieldProps } from "react-validify";
 
-const Input = ({ name, rules }: UseFieldProps) => {
+type Props = { placeholder: string } & FieldProps;
+
+const Input = ({ name, rules, placeholder }: Props) => {
   let { handleChange, handleBlur, value, errors } = useField({ name, rules });
 
   return (
@@ -62,6 +64,7 @@ const Input = ({ name, rules }: UseFieldProps) => {
         name={name}
         value={value}
         onBlur={handleBlur}
+        placeholder={placeholder}
         onChange={(event) => handleChange(event.target.value)}
       />
     </div>

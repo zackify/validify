@@ -1,19 +1,18 @@
 import React from "react";
-import useField from "../../src/use-field";
+import useField, { FieldProps } from "../../src/use-field";
 
-const Input = (props) => {
+const Input = ({ name, rules }: FieldProps) => {
   let { handleChange, handleBlur, value, errors } = useField({
-    name: props.name,
-    rules: props.rules,
+    name,
+    rules,
   });
   return (
     <div>
       {errors ? <p>{errors[0]}</p> : null}
       <input
-        {...props}
         value={value || ""}
         onBlur={handleBlur}
-        placeholder={props.name}
+        placeholder={name}
         onChange={(event) => handleChange(event.target.value)}
       />
     </div>

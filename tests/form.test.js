@@ -1,6 +1,10 @@
 import React from "react";
 import { render, fireEvent, wait, act } from "@testing-library/react";
-import { TestForm, TestFormWithRemovedField } from "./helpers/form";
+import {
+  TestForm,
+  TestFormWithRemovedField,
+  TestFormWithSingleRule,
+} from "./helpers/form";
 
 test("Checks dependent rule", async () => {
   let errorMessage = "Must be longer value than date 2 field";
@@ -209,4 +213,20 @@ test(`Doesnt check rule after component is unmounted`, async () => {
 
   //it should call submit even though email is empty, because it was unmounted
   expect(spy.mock.calls[0][0].email).toEqual("");
+});
+
+test(`Passing in single rule without array works correctly`, () => {
+  let { queryByPlaceholderText, queryByText } = render(
+    <TestFormWithSingleRule />
+  );
+  const email = queryByPlaceholderText("email");
+
+  fireEvent.focus(email);
+  fireEvent.change(email, { target: { value: "testtesst.com" } });
+  fireEvent.blur(email);
+
+  expect(queryByText("Email address is invalid")).toBeTruthy();
+  fireEvent.change(email, { target: { value: "test@tesst.com" } });
+  fireEvent.blur(email);
+  expect(queryByText("Email address is invalid")).toBeNull();
 });

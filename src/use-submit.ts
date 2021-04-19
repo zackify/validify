@@ -2,7 +2,7 @@ import React from "react";
 import validate from "./validate";
 import { FormContext } from "./form";
 
-const useSubmit = () => {
+export const useSubmit = () => {
   const {
     rules,
     values,
@@ -36,5 +36,3 @@ const useSubmit = () => {
     canSubmit: !errors.length,
   };
 };
-
-export default useSubmit;

@@ -1,6 +1,6 @@
 {
   "name": "react-validify",
-  "version": "6.0.4",
+  "version": "6.1.0",
   "description": "Form validation made easy",
   "main": "dist/index.js",
   "module": "lib/index.js",

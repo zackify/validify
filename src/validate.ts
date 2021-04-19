@@ -1,7 +1,6 @@
 import get from "lodash/get";
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { Error, RulesRef } from "./form";
-import { RuleFn } from "rules";
 
 type Props = {
   values: any;
