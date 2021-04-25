@@ -3,7 +3,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 import validate from "./validate";
 import { FormContext } from "./form";
-import { RuleFns } from "rules";
+import { RuleFns } from "./rules";
 
 export type FieldProps = {
   name: string;

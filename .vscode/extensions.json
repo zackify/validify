@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "prisma.prisma",
+    "golang.go",
+    "ms-azuretools.vscode-docker"
+  ]
+}
