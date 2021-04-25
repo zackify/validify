@@ -2,6 +2,7 @@
   "workbench.colorTheme": "Monokai Vibrant",
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
+  "terminal.integrated.shell.osx": "/bin/zsh",
   "tailwindCSS.includeLanguages": {
     "plaintext": "html",
     "typescript": "javascript",
