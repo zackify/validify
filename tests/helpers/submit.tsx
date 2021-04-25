@@ -1,5 +1,5 @@
-import React from 'react';
-import useSubmit from '../../src/use-submit';
+import React from "react";
+import { useSubmit } from "../../src/use-submit";
 
 type Props = {
   onSubmit?: (values: any) => any;

@@ -1,5 +1,5 @@
 import React from "react";
-import useField, { FieldProps } from "../../src/use-field";
+import { useField, FieldProps } from "../../src/use-field";
 
 const Input = ({ name, rules }: FieldProps) => {
   let { handleChange, handleBlur, value, errors } = useField({
