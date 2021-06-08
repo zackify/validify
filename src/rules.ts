@@ -1,5 +1,5 @@
 export type RuleFn = (
-  value: string,
+  value: any,
   values: { [key: string]: string }
 ) => string | boolean | undefined | null;
 
@@ -7,7 +7,8 @@ export type RuleFns = RuleFn | RuleFn[];
 
 // Taken from Stackoverflow
 export const email: RuleFn = (value) => {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   if (!re.test(String(value).toLowerCase())) return "Email address is invalid";
 };
 
