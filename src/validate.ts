@@ -17,7 +17,7 @@ export default ({ values, rules, setErrors, valuesBlurred }: Props) => {
     })
     .map((field) =>
       rules.current[field].map((rule) => {
-        let error = rule(get(values, field) || "", values);
+        let error = rule(get(values, field) ?? "", values);
 
         if (!error) return false;
 
